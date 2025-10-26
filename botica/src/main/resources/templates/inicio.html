@@ -12,73 +12,15 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
-
-
-  <style>
-    .search-bar {
-      max-width: 400px;
-      width: 100%;
-    }
-
-    .cart-badge {
-      position: absolute;
-      top: 0;
-      right: -8px;
-      background-color: red;
-      color: white;
-      font-size: 0.75rem;
-      border-radius: 50%;
-      padding: 2px 6px;
-    }
-  </style>
-
-
 </head>
 
 <body>
 
-  <!-- NAVBAR PRINCIPAL -->
-  <nav class="navbar navbar-expand-lg bg-light shadow-sm">
-    <div class="container-fluid px-4">
-      <a class="navbar-brand fw-bold" th:href="@{/}">
-        JhireFarma
-      </a>
+  <!-- Navegación principal -->
+  <div th:replace="fragments/navbar_tienda :: mainNavBar"></div>
 
-      <div class="d-flex flex-grow-1 justify-content-center">
-        <form class="d-flex search-bar" th:action="@{/buscar}" method="get">
-          <input class="form-control me-2" type="search" name="query" placeholder="Buscar productos..."
-            aria-label="Buscar">
-          <button class="btn btn-outline-primary" type="submit">
-            <i class="bi bi-search"></i>
-          </button>
-        </form>
-      </div>
-
-      <div class="d-flex align-items-center">
-        <a th:href="@{/login}" class="btn btn-outline-secondary me-3">
-          <i class="bi bi-person-circle me-1"></i> Iniciar sesión
-        </a>
-
-        <div class="position-relative">
-          <a th:href="@{/carrito}" class="btn btn-outline-primary position-relative">
-            <i class="bi bi-cart3 fs-5"></i>
-            <span class="cart-badge" th:text="${cantidadProductos}">0</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- NAVEGACIÓN SECUDANRIA -->
-  <div class="secondary-bar shadow-sm">
-    <div class="container-fluid d-flex justify-content-center">
-      <a th:href="@{/categoria/medicamentos}">Medicamentos</a>
-      <a th:href="@{/categoria/suplementos}">Suplementos</a>
-      <a th:href="@{/categoria/cuidado-personal}">Cuidado Personal</a>
-      <a th:href="@{/categoria/bebes}">Bebés</a>
-      <a th:href="@{/categoria/ofertas}">Ofertas</a>
-    </div>
-  </div>
+  <!-- Navegación secundaria (categorías) -->
+  <div th:replace="fragments/navbar_tienda :: secondaryNavBar"></div>
 
   <!-- CARRUSEL -->
   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -139,22 +81,6 @@
       </div>
     </div>
   </section>
-
-
-
-
-
-  <!-- <h1>Bienvenido a la Botica - Página de inicio</h1>
-  <div sec:authorize="hasRole('ADMIN')">
-    <a th:href="@{/admin/panel}">Panel Administrador</a>
-  </div>
-  <div sec:authorize="hasRole('VENDEDOR')">
-    <a th:href="@{/vendedor/pedidos}">Gestión de Ventas</a>
-  </div>
-  <div sec:authorize="hasRole('CLIENTE')">
-    <a th:href="@{/cliente/reservar}">Reservar compra</a>
-  </div>
-  <a th:href="@{/logout}">Cerrar sesión</a> -->
 </body>
 
 </html>
