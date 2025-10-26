@@ -1,0 +1,87 @@
+body {
+  overflow-x: hidden;
+}
+
+:root {
+  --main-color: #222ED0;
+  --main-color-3: rgba(34, 46, 208, 0.3);
+  --main-color-4: rgba(34, 46, 208, 0.4);
+  --main-color-5: rgba(34, 46, 208, 0.5);
+  --main-color-6: rgba(34, 46, 208, 0.6);
+  --main-color-7: rgba(34, 46, 208, 0.7);
+  --main-color-9: rgba(34, 46, 208, 0.9);
+  --accent-color: #C5FF6D;
+  --accent-color-5: rgba(197, 255, 109, 0.5);
+  --dark-color: #0B0B0B;
+  --light-color-3: #E0D3CD;
+  --light-color-2: rgb(236, 233, 228);
+  --light-color-2-5: rgba(236, 233, 228, 0.5);
+  --light-color-1: #F2F2F2;
+
+}
+
+/* Estilo para el sidebar */
+.sidebar {
+  min-height: 100vh;
+  background-color: var(--main-color-9);
+  color: #58F741;
+  padding-top: 1rem;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 0.5rem 1rem;
+}
+
+.sidebar a:hover {
+  background-color: #58F741;
+  color: #8E256E;
+}
+
+/* Colores */
+.bg-light-custom {
+  background-color: var(--light-color-2-5);
+}
+
+.bg-main-4 {
+  background-color: var(--main-color-7) !important;
+}
+
+/* Botones */
+.btn-accent {
+  background-color: var(--accent-color) !important;
+  color: var(--main-color);
+}
+
+.btn-accent-ligth {
+  background-color: var(--accent-color-5) !important;
+  color: var(--main-color) !important;
+}
+
+.btn-main-lightest {
+  background-color: var(--main-color-3) !important;
+  color: var(--main-color) !important;
+}
+
+/* Font */
+h1 {
+  font-size: 1.8em !important;
+}
+
+h2 {
+  font-size: 1.3em !important;
+}
+
+/* Input */
+.form-control-ligth {
+  background-color: var(--light-color-2-5);
+  border: solid 1px var(--light-color-3);
+}
+
+.icon-venta-success {
+  font-size: 200px;
+  color: var(--accent-color) !important;
+  text-align: center;
+}
