@@ -1,27 +1,49 @@
 package com.example.botica.model;
 
-public class Producto {
-  private String id;
-  private String nombre;
-  private String presentacion;
-  private double precio;
+import jakarta.persistence.*;
 
-  public Producto(String id, String nombre, String presentacion, double precio) {
-    this.id = id;
-    this.nombre = nombre;
-    this.presentacion = presentacion;
-    this.precio = precio;
-  }
-    // Getters
-    public String getId() { return id; }
+@Entity
+@Table(name = "producto")
+public class Producto {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private String nombre;
+    private String presentacion;
+    private Double precio;
+    private String imagen;
+    private Integer visitas;
+
+    // 🔹 Constructor vacío obligatorio para JPA
+    public Producto() {}
+
+    // 🔹 Constructor opcional (para crear objetos rápido)
+    public Producto(String nombre, String presentacion, Double precio, String imagen, Integer visitas) {
+        this.nombre = nombre;
+        this.presentacion = presentacion;
+        this.precio = precio;
+        this.imagen = imagen;
+        this.visitas = visitas;
+    }
+
+    // 🔹 Getters y Setters
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
+
     public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
     public String getPresentacion() { return presentacion; }
-    public double getPrecio() {
-      return precio;
-    }
-    public String toSearchableString() {
-        return (id != null ? id.toString() : "") + " "
-             + (nombre != null ? nombre : "") + " "
-             + (presentacion != null ? presentacion : "");
-    }
+    public void setPresentacion(String presentacion) { this.presentacion = presentacion; }
+
+    public Double getPrecio() { return precio; }
+    public void setPrecio(Double precio) { this.precio = precio; }
+
+    public String getImagen() { return imagen; }
+    public void setImagen(String imagen) { this.imagen = imagen; }
+
+    public Integer getVisitas() { return visitas; }
+    public void setVisitas(Integer visitas) { this.visitas = visitas; }
 }

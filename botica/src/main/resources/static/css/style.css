@@ -49,7 +49,17 @@ body {
   background-color: var(--main-color-7) !important;
 }
 
+.bg-accent {
+  background-color: var(--accent-color) !important;
+}
+
 /* Botones */
+
+.btn-main {
+  background-color: var(--main-color) !important;
+  color: white !important;
+}
+
 .btn-accent {
   background-color: var(--accent-color) !important;
   color: var(--main-color);
@@ -84,4 +94,37 @@ h2 {
   font-size: 200px;
   color: var(--accent-color) !important;
   text-align: center;
+}
+
+
+
+/* INICIO */
+/* NAVEGACIÓN PRINCIPAL */
+
+.navbar-brand {
+  color: var(--main-color) !important;
+}
+
+/* NAVEGACIÓN SECUNDARIA */
+.secondary-bar {
+  background-color: var(--accent-color);
+  color: var(--main-color);
+}
+
+.secondary-bar a {
+  color: var(--main-color);
+  text-decoration: none;
+  padding: 10px 20px;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.secondary-bar a:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* CARRUSEL */
+
+.carousel img {
+  min-height: 400px;
 }

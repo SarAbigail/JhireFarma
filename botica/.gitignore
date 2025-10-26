@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Credenciales y configs
+application.properties
+application.yml
