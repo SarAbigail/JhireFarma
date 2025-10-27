@@ -17,6 +17,9 @@ public class Producto {
   private String categoria;
   private String marca;
 
+  @Transient
+  private int cantidad = 1;
+
   // Constructor vacío para JPA
   public Producto() {
   }
@@ -77,5 +80,13 @@ public class Producto {
 
   public void setVisitas(Integer visitas) {
     this.visitas = visitas;
+  }
+
+  public int getCantidad() {
+    return cantidad;
+  }
+
+  public void setCantidad(int i) {
+    this.cantidad = i;
   }
 }

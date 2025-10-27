@@ -1,0 +1,41 @@
+<!-- <div th:fragment="modalCarrito">
+  <ul class="list-group">
+    <li class="list-group-item" th:each="producto : ${carrito}">
+      <span th:text="${producto.nombre}">Nombre</span> -
+      <span th:text="${producto.precio}">Precio</span>
+    </li>
+    <li class="list-group-item" th:if="${#lists.isEmpty(carrito)}">El carrito está vacío</li>
+  </ul>
+</div> -->
+
+
+<div th:fragment="carritoFragment">
+  <div th:if="${#lists.isEmpty(carrito)}">
+    Tu carrito está vacío
+  </div>
+  <div th:each="producto : ${carrito}" class="row mb-3 align-items-center">
+    <div class="col-3">
+      <img th:src="@{${producto.imagen}}" class="img-fluid" alt="Producto">
+    </div>
+    <div class="col-5">
+      <p class="mb-1 text-muted" th:text="${producto.presentacion}">Presentación</p>
+      <p class="mb-1 fw-bold" th:text="${producto.nombre}">Nombre</p>
+      <p class="mb-0">Cantidad: <span th:text="${producto.cantidad}">1</span></p>
+    </div>
+    <div class="col-4 text-end">
+      <p class="mb-1 fw-bold" th:text="'S/ ' + ${producto.precio}">Precio</p>
+      <button class="btn btn-danger btn-sm eliminar-producto-btn" th:data-id="${producto.id}">Eliminar</button>
+    </div>
+  </div>
+  <hr />
+  <div class="d-flex justify-content-between mb-3">
+    <span>Total:</span>
+    <!-- <span th:text="'S/ ' + ${total}">0</span> -->
+    <span th:text="'S/ ' + ${#numbers.formatDecimal(total, 1, 'POINT', 2, 'POINT')}">0</span>
+
+  </div>
+  <div class="d-flex justify-content-between">
+    <a href="/carrito" class="btn btn-primary">Ir a mi carrito</a>
+    <a href="/reserva" class="btn btn-success">Ir a reservar</a>
+  </div>
+</div>

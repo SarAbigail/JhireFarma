@@ -21,10 +21,12 @@
       </a>
 
       <div class="position-relative">
-        <a th:href="@{/carrito}" class="btn btn-outline-primary position-relative">
+        <button class="btn btn-outline-primary position-relative" data-bs-toggle="offcanvas"
+          data-bs-target="#carritoOffcanvas">
           <i class="bi bi-cart3 fs-5"></i>
-          <span class="cart-badge" th:text="${cantidadProductos}">0</span>
-        </a>
+          <!-- <span class="cart-badge" th:text="${cantidadProductos}">0</span> -->
+          <span class="cart-badge" th:text="${#lists.size(carrito)}">0</span>
+        </button>
       </div>
     </div>
   </div>

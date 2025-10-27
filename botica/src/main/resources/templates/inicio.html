@@ -75,6 +75,22 @@
       </div>
     </div>
   </section>
+
+  <!--Offcanvas -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="carritoOffcanvas">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">
+        Mi Carrito (<span class="size-carrito" th:text="${#lists.size(carrito)}">0</span>)
+      </h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="offcanvas-body-carrito">
+      Cargando...
+    </div>
+  </div>
+
+  <!-- Scripts del carrito -->
+  <div th:replace="fragments/carrito_scripts :: carritoScripts"></div>
 </body>
 
 </html>

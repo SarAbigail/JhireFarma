@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 
@@ -30,4 +31,6 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 
   // Obtiene nombre de productos
   List<Producto> findByNombreContainingIgnoreCase(String nombre);
+
+  Optional<Producto> findById(Long productoId);
 }

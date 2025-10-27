@@ -1,0 +1,57 @@
+<div th:fragment="carritoScripts">
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      function actualizarCarrito() {
+        fetch('/carrito/fragmento')
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById('offcanvas-body-carrito').innerHTML = html;
+            // Actualizar número
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            const cantidadProductos = tempDiv.querySelectorAll('.row.mb-3').length;
+            console.log(cantidadProductos);
+            document.querySelectorAll('.cart-badge').forEach(span => {
+              span.textContent = cantidadProductos;
+            });
+            document.querySelectorAll('.size-carrito').forEach(span => {
+              span.textContent = cantidadProductos;
+            });
+          });
+      }
+
+      // Abrir offcanvas
+      var offcanvasEl = document.getElementById('carritoOffcanvas');
+      if (offcanvasEl) {
+        offcanvasEl.addEventListener('show.bs.offcanvas', actualizarCarrito);
+      }
+
+      // Agregar productos (formularios con clase .agregar-carrito-form)
+      document.querySelectorAll('.agregar-carrito-form').forEach(form => {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const formData = new FormData(form);
+          fetch(form.action, { method: 'POST', body: formData })
+            .then(() => actualizarCarrito());
+        });
+      });
+
+      // Eliminar productos
+      document.addEventListener('click', function (e) {
+        console.log("eliminar" + e.target.getAttribute('data-id'));
+        if (e.target.classList.contains('eliminar-producto-btn')) {
+          const id = e.target.getAttribute('data-id');
+          const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+          const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+          fetch('/carrito/eliminar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', [header]: token },
+            body: `productoId=${id}`
+          }).then(() => actualizarCarrito());
+        }
+      });
+
+    });
+  </script>
+</div>

@@ -11,6 +11,7 @@ import java.util.List;
 public class ProductoService {
 
   private final ProductoRepository repo;
+
   @Autowired
   public ProductoService(ProductoRepository repo) {
     this.repo = repo;
@@ -27,4 +28,9 @@ public class ProductoService {
   public List<String> obtenerTopMarcas(String categoria) {
     return repo.findTop5MarcasByCategoria(categoria);
   }
+
+  public Producto buscarPorId(Long productoId) {
+    return repo.findById(productoId).orElse(null);
+  }
+
 }
