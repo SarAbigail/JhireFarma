@@ -1,7 +1,7 @@
 package com.example.botica.service;
 
-import com.example.botica.model.Usuarioo;
-import com.example.botica.repository.UsuariooRepository;
+import com.example.botica.model.Usuario;
+import com.example.botica.repository.UsuarioRepository;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class UsuarioService implements UserDetailsService {
 
-  private final UsuariooRepository usuarioRepository;
+  private final UsuarioRepository usuarioRepository;
 
-  public UsuarioService(UsuariooRepository usuarioRepository) {
+  public UsuarioService(UsuarioRepository usuarioRepository) {
     this.usuarioRepository = usuarioRepository;
   }
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Usuarioo usuario = usuarioRepository.findByUsername(username)
+    Usuario usuario = usuarioRepository.findByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
     return User.builder()
@@ -29,7 +29,7 @@ public class UsuarioService implements UserDetailsService {
 
   // Método auxiliar para crear usuarios
   public void crearUsuario(String username, String password, String rol) {
-    Usuarioo u = new Usuarioo();
+    Usuario u = new Usuario();
     u.setUsername(username);
     u.setPassword(new BCryptPasswordEncoder().encode(password));
     u.setRol(rol);

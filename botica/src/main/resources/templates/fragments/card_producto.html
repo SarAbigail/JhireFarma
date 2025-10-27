@@ -1,0 +1,11 @@
+<div th:fragment="card_producto" class="card h-100 text-center shadow-sm">
+  <img th:src="@{{foto}(foto=${producto.imagen})}" class="card-img-top px-3" alt="Imagen producto">
+  <div class="card-body m-2">
+    <p class="text-start text-muted mb-1 small text-uppercase" th:text="${producto.presentacion}"></p>
+    <h6 class="text-start card-title mb-2" th:text="${producto.nombre}"></h6>
+    <p class="text-start mb-2" th:text="'S/ ' + ${producto.precio}"></p>
+    <button class="btn btn-main text-center">
+      Agregar al carrito
+    </button>
+  </div>
+</div>

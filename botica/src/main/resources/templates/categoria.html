@@ -61,16 +61,8 @@
         </div>
 
         <div class="row row-cols-1 row-cols-md-4 g-4">
-          <div class="col" th:each="p : ${productos}">
-            <div class="card h-100 text-center">
-              <img th:src="@{{foto}(foto=${p.imagen})}" class="card-img-top px-3" alt="Imagen producto">
-              <div class="card-body">
-                <p class="text-muted mb-1" th:text="${p.presentacion}"></p>
-                <h6 th:text="${p.nombre}"></h6>
-                <p class="fw-bold text-success" th:text="'S/ ' + ${p.precio}"></p>
-                <button class="btn btn-outline-primary btn-sm">Agregar</button>
-              </div>
-            </div>
+          <div class="col" th:each="producto : ${productos}">
+            <div th:replace="fragments/card_producto :: card_producto"></div>
           </div>
         </div>
       </main>

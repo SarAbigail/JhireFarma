@@ -2,6 +2,8 @@ package com.example.botica.service;
 
 import com.example.botica.model.Producto;
 import com.example.botica.repository.ProductoRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -9,7 +11,7 @@ import java.util.List;
 public class ProductoService {
 
   private final ProductoRepository repo;
-
+  @Autowired
   public ProductoService(ProductoRepository repo) {
     this.repo = repo;
   }

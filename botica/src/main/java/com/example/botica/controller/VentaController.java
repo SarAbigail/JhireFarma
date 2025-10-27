@@ -1,14 +1,25 @@
 package com.example.botica.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
+
+import com.example.botica.model.Producto;
+import com.example.botica.repository.ProductoRepository;
+
 import java.util.List;
+
 @Controller
 public class VentaController {
-    @GetMapping("/ventas")
-    public String listarVentas(Model model) {
-        List<String> ventas = List.of("Venta 1", "Venta 2", "Venta 3");
-        model.addAttribute("ventas", ventas);
-        return "ventas";
-    }
+
+  @Autowired
+  private ProductoRepository productoRepository;
+
+  @GetMapping("/ventas")
+  public String verProductos(Model model) {
+    List<Producto> productos = productoRepository.findAll();
+    model.addAttribute("productos", productos);
+    return "ventas";
+  }
 }

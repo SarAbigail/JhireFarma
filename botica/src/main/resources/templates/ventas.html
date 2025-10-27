@@ -21,8 +21,8 @@
       <div th:replace="~{fragments/sidebar::sidebarMenuDesktop}"></div>
       <div th:replace="~{fragments/sidebar::sidebarMenuMobile}"></div>
       <!-- Contenido principal -->
-      <main class="col-md-9 col-lg-10">
-        <div class="row p-4 rounded bg-light-custom">
+      <main class="col-md-9 col-lg-10 bg-light-custom">
+        <div class="row p-4 rounded">
           <!-- <h1>Ventas</h1> -->
           <!-- Detalle operación -->
           <div class="col-12 col-lg-8 mb-4 pe-lg-5">
@@ -167,7 +167,7 @@
   async function cargarProductos(filtro = "") {
     let url = "/api/productos";
     if (filtro) {
-      url += "?q=" + encodeURIComponent(filtro);
+      url += "?buscar=" + encodeURIComponent(filtro);
     }
     const response = await fetch(url);
     const productos = await response.json();
@@ -192,6 +192,7 @@
   document.getElementById("buscador").addEventListener("input", (e) => {
     cargarProductos(e.target.value);
   });
+
   //Carga de productos inicial
   cargarProductos();
 

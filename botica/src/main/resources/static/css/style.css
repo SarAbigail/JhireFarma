@@ -28,14 +28,14 @@ body {
   padding-top: 1rem;
 }
 
-.sidebar a {
+.sidebar a, .sidebar button {
   color: white;
   text-decoration: none;
   display: block;
   padding: 0.5rem 1rem;
 }
 
-.sidebar a:hover {
+.sidebar a:hover, .sidebar button:hover {
   background-color: #58F741;
   color: #8E256E;
 }
