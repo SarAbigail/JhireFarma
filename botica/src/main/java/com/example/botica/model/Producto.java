@@ -25,12 +25,15 @@ public class Producto {
   }
 
   // Constructor opcional
-  public Producto(String nombre, String presentacion, Double precio, String imagen, Integer visitas) {
+  public Producto(String nombre, String presentacion, Double precio, String imagen, Integer visitas, String categoria,
+      String marca) {
     this.nombre = nombre;
     this.presentacion = presentacion;
     this.precio = precio;
     this.imagen = imagen;
     this.visitas = visitas;
+    this.categoria = categoria;
+    this.marca = marca;
   }
 
   // Getters y Setters
@@ -89,4 +92,21 @@ public class Producto {
   public void setCantidad(int i) {
     this.cantidad = i;
   }
+
+  public String getCategoria() {
+    return categoria;
+  }
+
+  public void setCategoria(String categoria) {
+    this.categoria = categoria;
+  }
+
+  public String getMarca() {
+    return marca;
+  }
+
+  public void setMarca(String marca) {
+    this.marca = marca;
+  }
+
 }

@@ -32,5 +32,4 @@ public class ProductoService {
   public Producto buscarPorId(Long productoId) {
     return repo.findById(productoId).orElse(null);
   }
-
 }
