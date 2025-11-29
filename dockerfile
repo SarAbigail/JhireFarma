@@ -1,11 +1,20 @@
-FROM eclipse-temurin:17-jdk
-
+# Etapa de construcción
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
-COPY target/*.jar app.jar
+# Copiar pom y código desde la subcarpeta "botica"
+COPY botica/pom.xml .
+COPY botica/src ./src
 
-ENV PORT=8080
+# Build del JAR
+RUN mvn -DskipTests package
+
+# Etapa de runtime
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+
+# Copiar el JAR generado desde la imagen anterior
+COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
-
-CMD ["sh", "-c", "java -jar app.jar --server.port=$PORT"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
