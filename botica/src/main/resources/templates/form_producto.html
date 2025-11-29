@@ -29,8 +29,7 @@
             <div class="card-body">
               <h3 class="card-title mb-4" th:text="${producto.id == null} ? 'Nuevo Producto' : 'Editar Producto'"></h3>
 
-              <form th:action="@{/admin/productos/guardar}" th:object="${producto}" method="post"
-                enctype="multipart/form-data">
+              <form th:action="@{guardar}" th:object="${producto}" method="post" enctype="multipart/form-data">
                 <input type="hidden" th:field="*{id}" />
 
                 <!-- Primera fila -->
@@ -42,7 +41,11 @@
 
                   <div class="col-md-6">
                     <label class="form-label">Presentación</label>
-                    <input type="text" class="form-control" th:field="*{presentacion}">
+                    <select th:field="*{presentacion}" class="form-control">
+                      <option value="">Seleccione</option>
+                      <option th:each="p : ${presentaciones}" th:value="${p.id}" th:text="${p.nombre}">
+                      </option>
+                    </select>
                   </div>
                 </div>
 
@@ -55,12 +58,20 @@
 
                   <div class="col-md-4">
                     <label class="form-label">Marca</label>
-                    <input type="text" class="form-control" th:field="*{marca}">
+                    <select th:field="*{marca}" class="form-control">
+                      <option value="">Seleccione</option>
+                      <option th:each="m : ${marcas}" th:value="${m.id}" th:text="${m.nombre}">
+                      </option>
+                    </select>
                   </div>
 
                   <div class="col-md-4">
                     <label class="form-label">Categoría</label>
-                    <input type="text" class="form-control" th:field="*{categoria}">
+                    <select th:field="*{categoria}" class="form-control">
+                      <option value="">Seleccione</option>
+                      <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nombre}">
+                      </option>
+                    </select>
                   </div>
                 </div>
 
@@ -68,16 +79,12 @@
                 <div class="row g-3 mt-1">
                   <div class="col-md-6">
                     <label class="form-label">Tipo de enfermedad / uso</label>
-                    <select class="form-select">
-                      <option value="">Seleccionar...</option>
-                      <option>Dolor</option>
-                      <option>Fiebre</option>
-                      <option>Resfrío</option>
-                      <option>Alergias</option>
-                      <option>Digestivo</option>
-                      <option>Otro</option>
+                    <select class="form-select" th:field="*{sintomas}" multiple size="5">
+                      <option th:each="s : ${sintomas}" th:value="${s.id}" th:text="${s.nombre}">
+                      </option>
                     </select>
                   </div>
+
 
                   <div class="col-md-3">
                     <label class="form-label">Stock disponible</label>
