@@ -17,6 +17,15 @@ public class ProductoService {
     this.repo = repo;
   }
 
+  // Método para guardar productos nuevos
+  public Producto guardarProducto(Producto producto) {
+    if (producto.getVisitas() == null) {
+      producto.setVisitas(0);
+    }
+
+    return repo.save(producto);
+  }
+
   public List<Producto> obtenerMasBuscados() {
     return repo.findTop5ByOrderByVisitasDesc();
   }

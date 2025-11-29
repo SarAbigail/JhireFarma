@@ -1,5 +1,7 @@
 package com.example.botica.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -16,6 +18,22 @@ public class Producto {
   private Integer visitas;
   private String categoria;
   private String marca;
+
+  @ManyToMany
+  @JoinTable(name = "producto_sintoma", joinColumns = @JoinColumn(name = "producto_id"), inverseJoinColumns = @JoinColumn(name = "sintoma_id"))
+  private List<Sintoma> sintomas;
+
+  @ManyToOne
+  @JoinColumn(name = "marca_id")
+  private Marca marca_;
+
+  @ManyToOne
+  @JoinColumn(name = "categoria_id")
+  private Categoria categoria_;
+
+  @ManyToOne
+  @JoinColumn(name = "presentacion_id")
+  private Presentacion presentacion_;
 
   @Transient
   private int cantidad = 1;
@@ -108,4 +126,13 @@ public class Producto {
   public void setMarca(String marca) {
     this.marca = marca;
   }
+
+  public List<Sintoma> getSintomas() {
+    return sintomas;
+  }
+
+  public void setSintomas(List<Sintoma> sintomas) {
+    this.sintomas = sintomas;
+  }
+
 }
