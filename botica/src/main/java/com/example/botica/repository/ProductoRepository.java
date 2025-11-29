@@ -33,4 +33,5 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
   List<Producto> findByNombreContainingIgnoreCase(String nombre);
 
   Optional<Producto> findById(Long productoId);
+
 }

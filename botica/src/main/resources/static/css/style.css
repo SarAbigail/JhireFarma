@@ -147,3 +147,22 @@ h2 {
 .carousel img {
   min-height: 400px;
 }
+
+/* CARDS */
+.card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2 !important;
+  /* máximo 2 líneas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+/* MODAL */
+.modal-backdrop.show {
+  opacity: 0.8 !important;
+}
+
+.offcanvas-backdrop.show {
+  opacity: 0.8 !important;
+}

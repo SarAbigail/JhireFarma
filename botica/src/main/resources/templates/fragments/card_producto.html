@@ -1,4 +1,4 @@
-<a th:href="@{'/producto/' + ${producto.id}}" class="text-decoration-none" th:fragment="card_producto">
+<!-- <a th:href="@{'/producto/' + ${producto.id}}" class="text-decoration-none" th:fragment="card_producto">
   <div class="card h-100 text-center shadow-sm">
     <img th:src="@{{foto}(foto=${producto.imagen})}" class="card-img-top px-3" alt="Imagen producto">
     <div class="card-body m-2">
@@ -8,6 +8,28 @@
       <form th:action="@{/carrito/agregar}" method="post">
         <input type="hidden" th:name="productoId" th:value="${producto.id}">
         <button type="submit" class="btn btn-main text-center">
+          Agregar al carrito
+        </button>
+      </form>
+    </div>
+  </div>
+</a> -->
+
+<a th:href="@{'/producto/' + ${producto.id}}" class="text-decoration-none" th:fragment="card_producto">
+  <div class="card h-100 text-center shadow-sm d-flex flex-column">
+    <img th:src="@{{foto}(foto=${producto.imagen})}" class="card-img-top px-3" style="min-height: 189.5px;"
+      alt="Imagen producto">
+
+    <div class="card-body d-flex flex-column justify-content-between m-2">
+      <div>
+        <p class="text-start text-muted mb-1 small text-uppercase" th:text="${producto.presentacion}"></p>
+        <h6 class="text-start card-title mb-2 text-truncate" style="max-width: 100%;" th:text="${producto.nombre}"></h6>
+        <p class="text-start mb-2 fw-bold" th:text="'S/ ' + ${producto.precio}"></p>
+      </div>
+
+      <form th:action="@{/carrito/agregar}" method="post" class="mt-auto">
+        <input type="hidden" th:name="productoId" th:value="${producto.id}">
+        <button type="submit" class="btn btn-main w-100">
           Agregar al carrito
         </button>
       </form>

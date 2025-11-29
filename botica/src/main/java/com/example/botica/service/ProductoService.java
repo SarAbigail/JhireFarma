@@ -32,4 +32,8 @@ public class ProductoService {
   public Producto buscarPorId(Long productoId) {
     return repo.findById(productoId).orElse(null);
   }
+
+  public List<Producto> obtenerTodosLosProductos() {
+    return repo.findAll();
+  }
 }

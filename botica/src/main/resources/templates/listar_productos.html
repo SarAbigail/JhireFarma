@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrar Productos</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div th:replace="fragments/sidebar_admin::hamburgerBtnMobile"></div>
+  <div class="container-fluid">
+    <div class="row">
+      <div th:replace="fragments/sidebar_admin::sidebarMenuDesktop"></div>
+      <div th:replace="fragments/sidebar_admin::sidebarMenuMobile"></div>
+      <main class="col-md-9 col-lg-10 py-4">
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3>Productos</h3>
+            <a th:href="@{/admin/productos/nuevo}" class="btn btn-primary">Nuevo Producto</a>
+          </div>
+
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Presentación</th>
+                <th>Precio</th>
+                <th>Marca</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="p : ${productos}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.nombre}"></td>
+                <td th:text="${p.presentacion}"></td>
+                <td th:text="${p.precio}"></td>
+                <td th:text="${p.marca}"></td>
+                <td class="text-center">
+                  <a th:href="@{'/admin/productos/editar/' + ${p.id}}"
+                    class="btn btn-sm btn-outline-secondary mb-1">Editar</a>
+                  <form th:action="@{'/admin/productos/eliminar/' + ${p.id}}" method="post" style="display:inline">
+                    <button class="btn btn-sm btn-danger"
+                      onclick="return confirm('¿Eliminar producto?')">Eliminar</button>
+                  </form>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>

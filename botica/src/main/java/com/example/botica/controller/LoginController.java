@@ -16,7 +16,7 @@ public class LoginController {
   @GetMapping("/redirectRol")
   public String redirigirSegunRol(Authentication auth) {
     if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-      return "redirect:/administracion";
+      return "redirect:/admin/productos";
     } else if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_VENDEDOR"))) {
       return "redirect:/ventas";
     } else {

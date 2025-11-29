@@ -108,5 +108,4 @@ public class Producto {
   public void setMarca(String marca) {
     this.marca = marca;
   }
-
 }
