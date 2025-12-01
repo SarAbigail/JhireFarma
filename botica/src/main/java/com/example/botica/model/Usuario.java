@@ -8,13 +8,13 @@ public class Usuario {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private int id;
 
   private String username;
   private String password;
   private String rol;
 
-  public Long getId() {
+  public int getId() {
     return id;
   }
 

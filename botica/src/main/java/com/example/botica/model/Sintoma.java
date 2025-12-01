@@ -10,6 +10,7 @@ public class Sintoma {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
   private String nombre;
+  private boolean estado;
 
   public Integer getId() {
     return id;
@@ -25,5 +26,17 @@ public class Sintoma {
 
   public void setNombre(String nombre) {
     this.nombre = nombre;
+  }
+
+  public Boolean getEstado() {
+    return estado;
+  }
+
+  public void setEstado(boolean estado) {
+    this.estado = estado;
+  }
+
+  // Constructor vacío para guardar sintomas
+  public Sintoma() {
   }
 }

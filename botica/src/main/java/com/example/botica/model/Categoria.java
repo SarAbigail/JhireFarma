@@ -1,17 +1,15 @@
 package com.example.botica.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "categoria")
 public class Categoria {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
-
+  private Integer id;
   private String nombre;
+  private boolean estado;
 
   public Integer getId() {
     return id;
@@ -27,5 +25,17 @@ public class Categoria {
 
   public void setNombre(String nombre) {
     this.nombre = nombre;
+  }
+
+  public Boolean getEstado() {
+    return estado;
+  }
+
+  public void setEstado(boolean estado) {
+    this.estado = estado;
+  }
+
+  // Constructor vacío para guardar categorías
+  public Categoria() {
   }
 }
