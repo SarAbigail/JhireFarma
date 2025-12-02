@@ -52,7 +52,7 @@ public class AdminProductoController {
   @GetMapping("/productos")
   public String listarProductos(Model model) {
     model.addAttribute("productos", productoService.obtenerTodosLosProductos());
-    return "listar_productos";
+    return "admin/listar_productos";
   }
 
   // Formulario nuevo producto
@@ -64,7 +64,7 @@ public class AdminProductoController {
     model.addAttribute("categorias", categoriaRepository.findAll());
     model.addAttribute("presentaciones", presentacionRepository.findAll());
 
-    return "form_producto";
+    return "admin/form_producto";
   }
 
   // Guardar producto
@@ -92,12 +92,11 @@ public class AdminProductoController {
     return "form_producto";
   }
 
-  // // Eliminar producto
-  // @PostMapping("/productos/eliminar/{id}")
-  // public String eliminarProducto(@PathVariable Long id, RedirectAttributes ra)
-  // {
-  // productoService.eliminar(id);
-  // ra.addFlashAttribute("success", "Producto eliminado");
-  // return "redirect:/admin/productos";
-  // }
+  // Eliminar producto
+  @PostMapping("/productos/eliminar/{id}")
+  public String eliminarProducto(@PathVariable Integer id, RedirectAttributes ra) {
+    productoService.eliminar(id);
+    ra.addFlashAttribute("success", "Producto eliminado");
+    return "redirect:/admin/productos";
+  }
 }

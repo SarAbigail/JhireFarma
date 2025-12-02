@@ -45,4 +45,12 @@ public class ProductoService {
   public List<Producto> obtenerTodosLosProductos() {
     return repo.findAll();
   }
+
+  public Producto eliminar(Integer id) {
+    Producto prod = repo.findById(id).orElse(null);
+    if (prod != null) {
+      repo.deleteById(id);
+    }
+    return prod;
+  }
 }

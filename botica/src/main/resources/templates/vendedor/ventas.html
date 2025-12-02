@@ -99,13 +99,15 @@
               </div>
               <div class="bg-white rounded p-4 d-flex flex-column">
                 <div class="row col-12 align-self-center mb-2">
-                  <div class="col-4 ps-0">
+                  <div class="col-4 ps-0" th:object="${venta}">
                     <label for="input-serie" class="fw-bold">Serie</label>
-                    <input type="text" name="input-serie" id="" class="form-control-ligth rounded w-100">
+                    <input type="text" name="input-serie" id="input-serie" class="form-control-ligth rounded w-100"
+                      th:field="*{serie}" th:value="*{serie}" readonly>
                   </div>
-                  <div class="col-8 pe-0">
+                  <div class="col-8 pe-0" th:object="${venta}">
                     <label for="input-nro" class="fw-bold">Nro</label>
-                    <input type=" text" name="input-nro" id="" class="form-control-ligth rounded w-100">
+                    <input type=" text" name="input-nro" id="input-nro" class="form-control-ligth rounded w-100"
+                      th:field="*{numero}" th:value="*{numero}" readonly>
                   </div>
                 </div>
                 <div class="row col-12 align-self-center mb-2">
@@ -307,6 +309,214 @@
   //REGISTRO DE VENTAS
   let ventas = [];
 
+  async function registrarVenta() {
+    if (orden.length === 0) {
+      alert("El carrito está vacío.");
+      return;
+    }
+
+    let fecha = document.getElementById("fechaEmision").value;
+    let efectivo = parseFloat(document.getElementById("efectivo").value) || 0;
+
+    let total = orden.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+
+    let venta = {
+      cliente: document.querySelector("input[name='input-cliente']").value,
+      metodoPago: "EFECTIVO",
+      total: total,
+      detalles: orden.map(p => ({
+        producto: { id: p.id },
+        cantidad: p.cantidad,
+        precio: p.precio,
+        subtotal: p.cantidad * p.precio
+      }))
+    };
+
+    console.log(venta)
+
+    // const response = await fetch("/api/ventas", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(venta)
+    // });
+
+    // console.log(response);
+    // if (!response.ok) {
+    //   alert("Hubo un error al registrar la venta");
+    //   return;
+    // }
+
+    // let ventaGuardada = await response.json();
+    // console.log("Venta registrada en BD:", ventaGuardada);
+
+    // // Mostrar modal
+    // let modal = new bootstrap.Modal(document.getElementById('ventaModal'));
+    // modal.show();
+
+    // // Limpiar pantalla
+    // reiniciarVenta();
+    fetch("/api/ventas", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(venta)
+    })
+      .then(res => res.text())
+      .then(() => {
+        let modal = new bootstrap.Modal(document.getElementById('ventaModal'));
+        modal.show();;
+      });
+  }
+
+</script>
+
+<!-- <script>
+  //Para setear la fecha de emisión en hoy
+  document.getElementById("fechaEmision").valueAsDate = new Date();
+
+  //Carga de productos
+  async function cargarProductos(filtro = "") {
+    let url = "/api/productos";
+    if (filtro) {
+      url += "?buscar=" + encodeURIComponent(filtro);
+    }
+    const response = await fetch(url);
+    const productos = await response.json();
+    const tbody = document.getElementById("tabla-productos");
+    tbody.innerHTML = "";
+    productos.forEach(p => {
+      const fila = document.createElement("tr");
+
+      fila.innerHTML = `<tr class="text-center">
+                      <td>${p.id}</td>
+                      <td>${p.nombre}</td>
+                      <td>${p.presentacion}</td>
+                      <td>-</td>
+                      <td>${p.precio}</td>
+                      <td class="text-center"><button class="btn btn-accent-ligth fw-bold py-0" data-id="${p.id}"><i class="bi bi-plus"></i></button>
+                      </td>
+                    </tr>`;
+      fila.querySelector("button").addEventListener("click", () => agregarAOrden(p));
+      tbody.appendChild(fila);
+    });
+  }
+  document.getElementById("buscador").addEventListener("input", (e) => {
+    cargarProductos(e.target.value);
+  });
+
+  //Carga de productos inicial
+  cargarProductos();
+
+  //AGREGAR PRODUCTOS
+  const buscador = document.getElementById("buscador");
+  const tablaResultados = document.querySelector("#tablaResultados tbody");
+  const tablaOrden = document.querySelector("#tablaOrden tbody");
+
+  let orden = [];
+
+  // Función para agregar producto a la orden
+  function agregarAOrden(producto) {
+    // Revisar si ya está en la orden
+    let existente = orden.find(p => p.id === producto.id);
+    if (existente) {
+      existente.cantidad++;
+    } else {
+      orden.push({ ...producto, cantidad: 1 });
+    }
+    renderOrden();
+  }
+
+  // Función para mostrar la orden de compra
+  function renderOrden() {
+    const tbody = document.querySelector("#tablaOrden tbody");
+    const montoTotal = document.querySelector(".monto-total-boleta");
+    tbody.innerHTML = "";
+    let totalGeneral = 0;
+
+    orden.forEach((p, index) => {
+      // Para que haya una cantidad mínima y precio numérico
+      if (!p.cantidad || p.cantidad < 1) p.cantidad = 1;
+      p.precio = Number(p.precio) || 0;
+
+      const totalLinea = p.precio * p.cantidad;
+      totalGeneral += totalLinea;
+
+      const fila = document.createElement("tr");
+      fila.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${p.nombre}</td>
+      <td>${p.presentacion}</td>
+      <td>
+        <input type="number" min="1" value="${p.cantidad}" data-index="${index}" class="cantidad-input form-control-ligth rounded w-100">
+      </td>
+      <td>${p.precio.toFixed(2)}</td>
+      <td class="total-linea">${totalLinea.toFixed(2)}</td>
+      <td class="text-center">
+        <button type="button" class="btn btn-danger btn-eliminar" data-index="${index}"><i class="bi bi-trash-fill"></i></button>
+      </td>
+    `;
+      tbody.appendChild(fila);
+    });
+
+    // Agregar fila de total despues de tabla
+    const filaTotal = document.createElement("tr");
+    filaTotal.innerHTML = `<td colspan="6" style="text-align:right"><strong>Total:</strong></td>
+                           <td><strong>${totalGeneral.toFixed(2)}</strong></td>
+                           <td></td>`;
+    tbody.appendChild(filaTotal);
+
+    // Actualizar todos los elementos con clase "monto-total-boleta"
+    document.querySelectorAll(".monto-total-boleta").forEach(el => {
+      el.textContent = totalGeneral.toFixed(2);
+    });
+
+    // Agregar listeners después de renderizar
+    tbody.querySelectorAll(".cantidad-input").forEach(input => {
+      input.addEventListener("change", (e) => {
+        const idx = parseInt(e.target.dataset.index, 10);
+        let val = parseInt(e.target.value, 10);
+        if (isNaN(val) || val < 1) val = 1;
+        orden[idx].cantidad = val;
+        renderOrden();
+      });
+    });
+
+    tbody.querySelectorAll(".btn-eliminar").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const idx = parseInt(e.currentTarget.dataset.index, 10);
+        orden.splice(idx, 1);
+        renderOrden();
+      });
+    });
+  }
+
+  //Funcion para boton reiniciar venta
+  function reiniciarVenta() {
+    // orden = [];
+    // renderOrden();
+    location.reload();
+  }
+
+  //Funcion para calcular vuelto
+  function calcularVuelto() {
+    const efectivoInput = document.querySelector("#efectivo");
+    const vueltoEl = document.querySelector("#vuelto");
+    // Leer efectivo ingresado
+    const efectivo = parseFloat(efectivoInput.value) || 0;
+    let total = 0;
+    document.querySelectorAll(".monto-total-boleta").forEach(el => {
+      total = parseFloat(el.textContent) || 0;
+    });
+
+    const vuelto = efectivo - total;
+    vueltoEl.textContent = vuelto.toFixed(2);
+  }
+
+  // Ejecutar funcion calcular vuelto
+  document.querySelector("#efectivo").addEventListener("input", calcularVuelto);
+
+  //REGISTRO DE VENTAS
+  let ventas = [];
+
   function registrarVenta() {
     if (orden.length === 0) {
       alert("El carrito está vacío. Agrega productos antes de registrar la venta.");
@@ -348,4 +558,4 @@
     document.getElementById("efectivo").value = "";
     document.getElementById("vuelto").textContent = "0.00";
   }
-</script>
+</script> -->

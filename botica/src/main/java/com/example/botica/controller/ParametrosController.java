@@ -46,24 +46,31 @@ public class ParametrosController {
     if (tabActiva.equals("marca")) {
       if (id != null) {
         model.addAttribute("formMarca", marcaService.buscarPorId(id));
+        model.addAttribute("esEdicion", true);
+
       } else {
         model.addAttribute("formMarca", new Marca());
+        model.addAttribute("esEdicion", false);
       }
     }
 
     if (tabActiva.equals("sintoma")) {
       if (id != null) {
         model.addAttribute("formSintoma", sintomaService.buscarPorId(id));
+        model.addAttribute("esEdicion", true);
       } else {
         model.addAttribute("formSintoma", new Sintoma());
+        model.addAttribute("esEdicion", false);
       }
     }
 
     if (tabActiva.equals("presentacion")) {
       if (id != null) {
-        model.addAttribute("formPres", presentacionService.buscarPorId(id));
+        model.addAttribute("formPresentacion", presentacionService.buscarPorId(id));
+        model.addAttribute("esEdicion", true);
       } else {
-        model.addAttribute("formPres", new Presentacion());
+        model.addAttribute("formPresentacion", new Presentacion());
+        model.addAttribute("esEdicion", false);
       }
     }
 
@@ -100,19 +107,48 @@ public class ParametrosController {
     return "redirect:/parametros?tab=sintoma";
   }
 
-  // @GetMapping("/categoria/editar/{id}")
-  // public String editarCategoria(@PathVariable int id, Model model) {
+  // ---------- TOGGLE ----------
+  @GetMapping("/categoria/toggle/{id}")
+  public String toggleCategoria(@PathVariable Integer id) {
+    Categoria categoria = categoriaService.buscarPorId(id);
+    if (categoria != null) {
+      categoria.setEstado(!categoria.getEstado());
+      categoriaService.guardar(categoria);
+    }
+    return "redirect:/parametros?tab=categoria";
+  }
 
-  // Categoria cat = categoriaService.buscarPorId(id);
+  // ---------- TOGGLE ----------
+  @GetMapping("/marca/toggle/{id}")
+  public String toggleMarca(@PathVariable Integer id) {
+    Marca marca = marcaService.buscarPorId(id);
+    if (marca != null) {
+      marca.setEstado(!marca.getEstado());
+      marcaService.guardar(marca);
+    }
+    return "redirect:/parametros?tab=marca";
+  }
 
-  // model.addAttribute("tabActiva", "categoria");
-  // model.addAttribute("cat", cat); // <--- IMPORTANTE
-  // model.addAttribute("esEdicion", true); // <--- IMPORTANTE
+  // ---------- TOGGLE ----------
+  @GetMapping("/sintoma/toggle/{id}")
+  public String toggleSintoma(@PathVariable Integer id) {
+    Sintoma sintoma = sintomaService.buscarPorId(id);
+    if (sintoma != null) {
+      sintoma.setEstado(!sintoma.getEstado());
+      sintomaService.guardar(sintoma);
+    }
+    return "redirect:/parametros?tab=sintoma";
+  }
 
-  // // listas
-  // model.addAttribute("categoria", categoriaService.listar());
-
-  // return "parametros";
-  // }
+  // ---------- TOGGLE ----------
+  @GetMapping("/presentacion/toggle/{id}")
+  public String togglePresentacion(@PathVariable Integer id) {
+    Presentacion presentacion = presentacionService.buscarPorId(id);
+    if (presentacion != null) {
+      presentacion.setEstado(!presentacion.getEstado());
+      presentacionService.guardar(presentacion);
+    }
+    return "redirect:/parametros?tab=presentacion";
+  }
 
 }

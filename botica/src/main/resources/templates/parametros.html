@@ -13,7 +13,7 @@
     crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="bg-light">
   <div th:replace="fragments/sidebar_admin::hamburgerBtnMobile"></div>
   <div class="container-fluid">
     <div class="row">
@@ -25,28 +25,28 @@
           <div class="card shadow-sm border-0">
             <div class="card-body">
               <h3 class="card-title mb-4">Parámetros</h3>
-              <p>tabActiva: <span th:text="${tabActiva}">?</span></p>
               <!-- Tabs -->
               <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
+                <!-- <li class="nav-item" role="presentation">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#categoria" type="button"
                     th:classappend="${tabActiva.equals('categoria')} ? ' active' : ''"
                     th:href="@{/parametros(tab='categoria')}">Categoría</button>
+                </li> -->
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" th:classappend="${tabActiva.equals('categoria')} ? ' active' : ''"
+                    th:href="@{/parametros(tab='categoria')}" role="tab">Categoría</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#marca" type="button"
-                    th:classappend="${tabActiva.equals('marca')} ? ' active' : ''"
-                    th:href="@{/parametros(tab='marca')}">Marca</button>
+                  <a class="nav-link" th:classappend="${tabActiva.equals('marca')} ? ' active' : ''"
+                    th:href="@{/parametros(tab='marca')}" role="tab">Marca</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#sintoma" type="button"
-                    th:classappend="${tabActiva.equals('sintoma')} ? ' active' : ''"
-                    th:href="@{/parametros(tab='sintoma')}">Síntoma</button>
+                  <a class="nav-link" th:classappend="${tabActiva.equals('sintoma')} ? ' active' : ''"
+                    th:href="@{/parametros(tab='sintoma')}" role="tab">Síntoma</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#presentacion" type="button"
-                    th:classappend="${tabActiva.equals('presentacion')} ? ' active' : ''"
-                    th:href="@{/parametros(tab='presentacion')}">Presentación</button>
+                  <a class="nav-link" th:classappend="${tabActiva.equals('presentacion')} ? ' active' : ''"
+                    th:href="@{/parametros(tab='presentacion')}" role="tab">Presentación</a>
                 </li>
               </ul>
 
@@ -56,7 +56,7 @@
                 <div id="categoria"
                   th:class="${tabActiva.equals('categoria')} ? 'tab-pane fade show active' : 'tab-pane fade'">
                   <form th:action="@{/parametros/categoria/guardar}" method="post" class="row g-3">
-                    <input type="hidden" name="id" th:value="${formCategoria.id}">
+                    <input type="hidden" name="id" th:value="${formCategoria != null} ? ${formCategoria.id} : ''">
                     <div class="col-md-7">
                       <label class="form-label">Nombre</label>
                       <input type="text" name="nombre" class="form-control"
@@ -66,17 +66,11 @@
                       <div class="col-md-12">
                         <label class="form-label">Estado</label>
                       </div>
-                      <!-- <div class="form-check form-switch">
-                        <input type="checkbox" name="estado" class="form-check-input"
-                          th:checked="${formCategoria.estado}" id="switchCat" role="switch" aria-checked="${c.estado}">
-                        <label class="form-check-label" for="switchCat"
-                          th:text="${formCategoria.estado} ? 'Activo' : 'Inactivo'"></label>
-                      </div> -->
                       <div class="form-check form-switch">
                         <input class="form-check-input switch-estado" type="checkbox" id="switchCat" name="estado"
-                          value="true" th:checked="${formCategoria.estado}">
+                          value="true" th:checked="${formCategoria != null} ? ${formCategoria.estado} : ''">
                         <label class="form-check-label" for="switchCat"
-                          th:text="${formCategoria.estado} ? 'Activo' : 'Inactivo'"></label>
+                          th:text="${formCategoria != null} ? 'Activo' : 'Inactivo'"></label>
                       </div>
                     </div>
                     <div class="col-md-2 text-center align-content-center">
@@ -109,7 +103,7 @@
                           <a th:href="@{/parametros(tab='categoria',id=${c.id})}" class="btn btn-sm btn-primary">
                             <i class="bi bi-pencil-square"></i>
                           </a>
-                          <a th:href="@{'/categoria/toggle/' + ${c.id}}" class="btn btn-sm btn-warning ms-1">
+                          <a th:href="@{'/parametros/categoria/toggle/' + ${c.id}}" class="btn btn-sm btn-warning ms-1">
                             <i class="bi" th:classappend="${c.estado} ? 'bi-toggle-on' : 'bi-toggle-off'"></i>
                           </a>
                         </td>
@@ -121,37 +115,38 @@
                 <!-- Marca -->
                 <div th:class="${tabActiva.equals('marca')} ? 'tab-pane fade show active' : 'tab-pane fade'" id="marca">
                   <form th:action="@{/parametros/marca/guardar}" method="post" class="row g-3">
+                    <input type="hidden" name="id" th:value="${formMarca != null} ? ${formMarca.id} : ''">
                     <!-- campo nombre -->
                     <div class="col-md-7">
                       <label class="form-label">Nombre</label>
-                      <input type="text" name="nombre" class="form-control" required />
+                      <input type="text" name="nombre" class="form-control"
+                        th:value="${formMarca != null} ? ${formMarca.nombre} : ''" required />
                     </div>
                     <!-- campo pais origen -->
                     <div class="col-md-2">
                       <label class="form-label">País de origen</label>
-                      <!-- <input type="text" name="paisOrigen" class="form-control" /> -->
-                      <div th:replace="fragments/select_paises :: selectPaises('paisOrigen')"></div>
+                      <!-- <div th:replace="fragments/select_paises :: selectPaises('paisOrigen')"></div> -->
+                      <div
+                        th:replace="fragments/select_paises :: selectPaises('paisOrigen', ${formMarca != null ? formMarca.paisOrigen : null})">
+                      </div>
                     </div>
                     <!-- campo estado -->
                     <div class="col-md-1">
                       <div class="col-md-12">
                         <label class="form-label">Estado</label>
                       </div>
-                      <!-- <div class="form-check form-switch">
-                        <input type="checkbox" name="estado" class="form-check-input" id="switchMar" role="switch"
-                          aria-checked="${m.estado}">
-                        <label class="form-check-label" for="switchMar">Activo</label>
-                      </div> -->
                       <div class="form-check form-switch">
-                        <input class="form-check-input switch-estado" type="checkbox" id="switchMar" name="estado"
-                          value="true" th:checked="${formCategoria.estado}">
+                        <input type="checkbox" name="estado" class="form-check-input switch-estado" id="switchMar"
+                          role="switch" aria-checked="${m.estado}"
+                          th:checked="${formMarca != null} ? ${formMarca.estado} : false">
                         <label class="form-check-label" for="switchMar"
-                          th:text="${formCategoria.estado} ? 'Activo' : 'Inactivo'"></label>
+                          th:text="${formMarca != null && formMarca.estado} ? 'Activo' : 'Inactivo'"></label>
                       </div>
                     </div>
                     <!-- campo guardar -->
                     <div class="col-md-2 text-center align-content-center">
-                      <button class="btn btn-secondary">Guardar</button>
+                      <button class="btn btn-secondary"
+                        th:text="${esEdicion} ? 'Actualizar' : 'Guardar'">Guardar</button>
                     </div>
                   </form>
                   <h4 class="mt-4">Listado de marcas</h4>
@@ -175,10 +170,10 @@
                           <span th:if="${!m.estado}" class="badge bg-danger">No Visible</span>
                         </td>
                         <td class="text-center">
-                          <a th:href="@{'/marca/editar/' + ${m.id}}" class="btn btn-sm btn-primary">
+                          <a th:href="@{/parametros?(tab='marca',id=${m.id})}" class="btn btn-sm btn-primary">
                             <i class="bi bi-pencil-square"></i>
                           </a>
-                          <a th:href="@{'/marca/toggle/' + ${m.id}}" class="btn btn-sm btn-warning ms-1">
+                          <a th:href="@{'/parametros/marca/toggle/' + ${m.id}}" class="btn btn-sm btn-warning ms-1">
                             <i class="bi" th:classappend="${m.estado} ? 'bi-toggle-on' : 'bi-toggle-off'"></i>
                           </a>
                         </td>
@@ -191,10 +186,12 @@
                 <div th:class="${tabActiva.equals('sintoma')} ? 'tab-pane fade show active' : 'tab-pane fade'"
                   id="sintoma">
                   <form th:action="@{/parametros/sintoma/guardar}" method="post" class="row g-3">
+                    <input type="hidden" name="id" th:value="${formSintoma != null} ? ${formSintoma.id} : ''">
                     <!-- campo nombre -->
                     <div class="col-md-7">
                       <label class="form-label">Nombre</label>
-                      <input type="text" name="nombre" class="form-control" required />
+                      <input type="text" name="nombre" class="form-control"
+                        th:value="${formSintoma != null} ? ${formSintoma.nombre} : ''" required />
                     </div>
                     <!-- campo estado -->
                     <div class="col-md-3">
@@ -202,14 +199,17 @@
                         <label class="form-label">Estado</label>
                       </div>
                       <div class="form-check form-switch">
-                        <input type="checkbox" name="estado" class="form-check-input" id="switchSin" role="switch"
-                          aria-checked="${s.estado}">
-                        <label class="form-check-label" for="switchSin">Activo</label>
+                        <input type="checkbox" name="estado" class="form-check-input switch-estado" id="switchSin"
+                          role="switch" aria-checked="${s.estado}"
+                          th:checked="${formSintoma != null} ? ${formSintoma.estado} : false">
+                        <label class="form-check-label" for="switchSin"
+                          th:text="${formSintoma != null && formSintoma.estado} ? 'Activo' : 'Inactivo'"></label>
                       </div>
                     </div>
                     <!-- botón guardar -->
                     <div class="col-md-2 text-center align-content-center">
-                      <button class="btn btn-secondary">Guardar</button>
+                      <button class="btn btn-secondary"
+                        th:text="${esEdicion} ? 'Actualizar' : 'Guardar'">Guardar</button>
                     </div>
                   </form>
                   <h4 class="mt-4">Listado de síntomas</h4>
@@ -231,10 +231,10 @@
                           <span th:if="${!s.estado}" class="badge bg-danger">No Visible</span>
                         </td>
                         <td class="text-center">
-                          <a th:href="@{'/sintoma/editar/' + ${s.id}}" class="btn btn-sm btn-primary">
+                          <a th:href="@{/parametros?(tab='sintoma',id=${s.id})}" class="btn btn-sm btn-primary">
                             <i class="bi bi-pencil-square"></i>
                           </a>
-                          <a th:href="@{'/sintoma/toggle/' + ${s.id}}" class="btn btn-sm btn-warning ms-1">
+                          <a th:href="@{'/parametros/sintoma/toggle/' + ${s.id}}" class="btn btn-sm btn-warning ms-1">
                             <i class="bi" th:classappend="${s.estado} ? 'bi-toggle-on' : 'bi-toggle-off'"></i>
                           </a>
                         </td>
@@ -247,10 +247,12 @@
                 <div th:class="${tabActiva.equals('presentacion')} ? 'tab-pane fade show active' : 'tab-pane fade'"
                   id="presentacion">
                   <form th:action="@{/parametros/presentacion/guardar}" method="post" class="row g-3">
+                    <input type="hidden" name="id" th:value="${formPresentacion != null} ? ${formPresentacion.id} : ''">
                     <!-- campo nombre -->
                     <div class="col-md-7">
                       <label class="form-label">Nombre</label>
-                      <input type="text" name="nombre" class="form-control" required />
+                      <input type="text" name="nombre" class="form-control"
+                        th:value="${formPresentacion != null} ? ${formPresentacion.nombre} : ''" required />
                     </div>
                     <!-- campo estado -->
                     <div class="col-md-3">
@@ -258,17 +260,20 @@
                         <label class="form-label">Estado</label>
                       </div>
                       <div class="form-check form-switch">
-                        <input type="checkbox" name="estado" class="form-check-input" id="switchPres" role="switch"
-                          aria-checked="${p.estado}">
-                        <label class="form-check-label" for="switchPres">Activo</label>
+                        <input type="checkbox" name="estado" class="form-check-input switch-estado" id="switchPres"
+                          role="switch" aria-checked="${p.estado}"
+                          th:checked="${formPresentacion != null} ? ${formPresentacion.estado} : false">
+                        <label class="form-check-label" for="switchPres"
+                          th:text="${formPresentacion != null && formPresentacion.estado} ? 'Activo' : 'Inactivo'"></label>
                       </div>
                     </div>
                     <!-- botón guardar -->
                     <div class="col-md-2 text-center align-content-center">
-                      <button class="btn btn-secondary">Guardar</button>
+                      <button class="btn btn-secondary"
+                        th:text="${esEdicion} ? 'Actualizar' : 'Guardar'">Guardar</button>
                     </div>
                   </form>
-                  <h4 class="mt-4">Listado de síntomas</h4>
+                  <h4 class="mt-4">Listado de presentaciones</h4>
                   <table class="table table-bordered mt-3">
                     <thead>
                       <tr>
@@ -287,10 +292,11 @@
                           <span th:if="${!p.estado}" class="badge bg-danger">No Visible</span>
                         </td>
                         <td class="text-center">
-                          <a th:href="@{'/presentacion/editar/' + ${p.id}}" class="btn btn-sm btn-primary">
+                          <a th:href="@{/parametros?(tab='presentacion',id=${p.id})}" class="btn btn-sm btn-primary">
                             <i class="bi bi-pencil-square"></i>
                           </a>
-                          <a th:href="@{'/presentacion/toggle/' + ${p.id}}" class="btn btn-sm btn-warning ms-1">
+                          <a th:href="@{'/parametros/presentacion/toggle/' + ${p.id}}"
+                            class="btn btn-sm btn-warning ms-1">
                             <i class="bi" th:classappend="${p.estado} ? 'bi-toggle-on' : 'bi-toggle-off'"></i>
                           </a>
                         </td>
@@ -311,6 +317,7 @@
 </html>
 
 <script>
+
   //Para cambiar el texto del label de estado para categoría
   document.addEventListener("DOMContentLoaded", () => {
 

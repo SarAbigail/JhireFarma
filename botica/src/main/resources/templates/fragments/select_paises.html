@@ -1,45 +1,47 @@
-<th:block th:fragment="selectPaises(nombreCampo)">
+<th:block th:fragment="selectPaises(nombreCampo,valorSeleccionado)">
   <select th:name="${nombreCampo}" class="form-select" required>
-    <option value="">Seleccione un país</option>
-    <option value="Afganistán">Afganistán</option>
-    <option value="Albania">Albania</option>
-    <option value="Alemania">Alemania</option>
-    <option value="Andorra">Andorra</option>
-    <option value="Angola">Angola</option>
-    <option value="Antigua y Barbuda">Antigua y Barbuda</option>
-    <option value="Arabia Saudita">Arabia Saudita</option>
-    <option value="Argelia">Argelia</option>
-    <option value="Argentina">Argentina</option>
-    <option value="Armenia">Armenia</option>
-    <option value="Australia">Australia</option>
-    <option value="Austria">Austria</option>
-    <option value="Azerbaiyán">Azerbaiyán</option>
-    <option value="Bahamas">Bahamas</option>
-    <option value="Bangladés">Bangladés</option>
-    <option value="Barbados">Barbados</option>
-    <option value="Baréin">Baréin</option>
-    <option value="Bélgica">Bélgica</option>
-    <option value="Belice">Belice</option>
-    <option value="Benín">Benín</option>
-    <option value="Bielorrusia">Bielorrusia</option>
-    <option value="Birmania / Myanmar">Birmania / Myanmar</option>
-    <option value="Bolivia">Bolivia</option>
-    <option value="Bosnia y Herzegovina">Bosnia y Herzegovina</option>
-    <option value="Botsuana">Botsuana</option>
-    <option value="Brasil">Brasil</option>
-    <option value="Brunéi">Brunéi</option>
-    <option value="Bulgaria">Bulgaria</option>
-    <option value="Burkina Faso">Burkina Faso</option>
-    <option value="Burundi">Burundi</option>
-    <option value="Cabo Verde">Cabo Verde</option>
-    <option value="Camboya">Camboya</option>
-    <option value="Camerún">Camerún</option>
-    <option value="Canadá">Canadá</option>
-    <option value="Catar">Catar</option>
-    <option value="Chad">Chad</option>
-    <option value="Chile">Chile</option>
-    <option value="China">China</option>
-    <option value="Chipre">Chipre</option>
+    <option value="">Seleccione</option>
+    <option value="Afganistán" th:selected="${valorSeleccionado == 'Afganistán'}">Afganistán</option>
+    <option value="Albania" th:selected="${valorSeleccionado == 'Albania'}">Albania</option>
+    <option value="Alemania" th:selected="${valorSeleccionado == 'Alemania'}">Alemania</option>
+    <option value="Andorra" th:selected="${valorSeleccionado == 'Andorra'}">Andorra</option>
+    <option value="Angola" th:selected="${valorSeleccionado == 'Angola'}">Angola</option>
+    <option value="Antigua y Barbuda" th:selected="${valorSeleccionado == 'Antigua y Barbuda'}">Antigua y Barbuda
+    </option>
+    <option value="Arabia Saudita" th:selected="${valorSeleccionado == 'Arabia Saudita'}">Arabia Saudita</option>
+    <option value="Argelia" th:selected="${valorSeleccionado == 'Argelia'}">Argelia</option>
+    <option value="Argentina" th:selected="${valorSeleccionado == 'Argentina'}">Argentina</option>
+    <option value="Armenia" th:selected="${valorSeleccionado == 'Armenia'}">Armenia</option>
+    <option value="Australia" th:selected="${valorSeleccionado == 'Australia'}">Australia</option>
+    <option value="Austria" th:selected="${valorSeleccionado == 'Austria'}">Austria</option>
+    <option value="Azerbaiyán" th:selected="${valorSeleccionado == 'Azerbaiyán'}">Azerbaiyán</option>
+    <option value="Bahamas" th:selected="${valorSeleccionado == 'Bahamas'}">Bahamas</option>
+    <option value="Bangladés" th:selected="${valorSeleccionado == 'Bangladés'}">Bangladés</option>
+    <option value="Barbados" th:selected="${valorSeleccionado == 'Barbados'}">Barbados</option>
+    <option value="Baréin" th:selected="${valorSeleccionado == 'Baréin'}">Baréin</option>
+    <option value="Bélgica" th:selected="${valorSeleccionado == 'Bélgica'}">Bélgica</option>
+    <option value="Belice" th:selected="${valorSeleccionado == 'Belice'}">Belice</option>
+    <option value="Benín" th:selected="${valorSeleccionado == 'Benín'}">Benín</option>
+    <option value="Bielorrusia" th:selected="${valorSeleccionado == 'Bielorrusia'}">Bielorrusia</option>
+    <option value="Birmania / Myanmar" th:selected="${valorSeleccionado == 'Birmania / Myanmar'}">Birmania / Myanmar
+    </option>
+    <option value="Bolivia" th:selected="${valorSeleccionado == ''}">Bolivia</option>
+    <option value="Bosnia y Herzegovina" th:selected="${valorSeleccionado == ''}">Bosnia y Herzegovina</option>
+    <option value="Botsuana" th:selected="${valorSeleccionado == ''}">Botsuana</option>
+    <option value="Brasil" th:selected="${valorSeleccionado == ''}">Brasil</option>
+    <option value="Brunéi" th:selected="${valorSeleccionado == ''}">Brunéi</option>
+    <option value="Bulgaria" th:selected="${valorSeleccionado == ''}">Bulgaria</option>
+    <option value="Burkina Faso" th:selected="${valorSeleccionado == ''}">Burkina Faso</option>
+    <option value="Burundi" th:selected="${valorSeleccionado == ''}">Burundi</option>
+    <option value="Cabo Verde" th:selected="${valorSeleccionado == ''}">Cabo Verde</option>
+    <option value="Camboya" th:selected="${valorSeleccionado == ''}">Camboya</option>
+    <option value="Camerún" th:selected="${valorSeleccionado == ''}">Camerún</option>
+    <option value="Canadá" th:selected="${valorSeleccionado == ''}">Canadá</option>
+    <option value="Catar" th:selected="${valorSeleccionado == ''}">Catar</option>
+    <option value="Chad" th:selected="${valorSeleccionado == ''}">Chad</option>
+    <option value="Chile" th:selected="${valorSeleccionado == ''}">Chile</option>
+    <option value="China" th:selected="${valorSeleccionado == ''}">China</option>
+    <option value="Chipre" th:selected="${valorSeleccionado == ''}">Chipre</option>
     <option value="Colombia">Colombia</option>
     <option value="Comoras">Comoras</option>
     <option value="Corea del Norte">Corea del Norte</option>
@@ -136,7 +138,7 @@
     <option value="Panamá">Panamá</option>
     <option value="Papúa Nueva Guinea">Papúa Nueva Guinea</option>
     <option value="Paraguay">Paraguay</option>
-    <option value="Perú">Perú</option>
+    <option value="Perú" th:selected="${valorSeleccionado == 'Perú'}">Perú</option>
     <option value="Polonia">Polonia</option>
     <option value="Portugal">Portugal</option>
     <option value="Reino Unido">Reino Unido</option>

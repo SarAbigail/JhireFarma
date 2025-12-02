@@ -1,4 +1,4 @@
-package com.example.botica.controller;
+package com.example.botica.controller.vendedor;
 
 import com.example.botica.model.Producto;
 import com.example.botica.repository.ProductoRepository;
