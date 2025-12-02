@@ -35,3 +35,7 @@ build/
 # Credenciales y configs
 application.properties
 application.yml
+
+# Logs de la aplicación
+logs/
+*.log

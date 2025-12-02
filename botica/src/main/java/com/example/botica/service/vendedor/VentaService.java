@@ -47,35 +47,31 @@ public class VentaService {
   // }
 
   public Venta registrarVenta(Venta ventaRecibida) {
-
     Venta venta = new Venta();
     venta.setSerie(ventaRecibida.getSerie());
     venta.setNumero(ventaRecibida.getNumero());
     venta.setFecha(LocalDate.now());
     venta.setCliente(ventaRecibida.getCliente());
+    venta.setDni(ventaRecibida.getDni());
     venta.setMetodoPago(ventaRecibida.getMetodoPago());
     venta.setTotal(ventaRecibida.getTotal());
-
+    venta.setEfectivo(ventaRecibida.getEfectivo());
+    venta.setVuelto(ventaRecibida.getVuelto());
+    venta.setIgv(ventaRecibida.getIgv());
     List<VentaDetalle> detallesGuardados = new ArrayList<>();
-
     for (VentaDetalle d : ventaRecibida.getDetalles()) {
-
       Producto producto = productoRepository.findById(d.getProducto().getId()).orElse(null);
       if (producto == null)
         continue;
-
       VentaDetalle detalle = new VentaDetalle();
       detalle.setVenta(venta);
       detalle.setProducto(producto);
       detalle.setCantidad(d.getCantidad());
       detalle.setPrecio(d.getPrecio());
       detalle.setSubtotal(d.getSubtotal());
-
       detallesGuardados.add(detalle);
     }
-
     venta.setDetalles(detallesGuardados);
-
     return ventaRepository.save(venta);
   }
 }

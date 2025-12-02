@@ -21,6 +21,5 @@ public class VentaRestController {
   public ResponseEntity<String> registrar(@RequestBody Venta venta) {
     ventaService.registrarVenta(venta);
     return ResponseEntity.ok().body("ok");
-
   }
 }

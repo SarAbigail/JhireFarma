@@ -43,6 +43,10 @@ public class Venta {
   private String metodoPago;
   private String serie;
   private String numero;
+  private String dni;
+  private Double efectivo;
+  private Double vuelto;
+  private Double igv;
 
   @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
   private List<VentaDetalle> detalles;
@@ -111,7 +115,40 @@ public class Venta {
     this.numero = numero;
   }
 
+  public String getDni() {
+    return dni;
+  }
+
+  public void setDni(String dni) {
+    this.dni = dni;
+  }
+
+  public Double getEfectivo() {
+    return efectivo;
+  }
+
+  public void setEfectivo(Double efectivo) {
+    this.efectivo = efectivo;
+  }
+
+  public Double getVuelto() {
+    return vuelto;
+  }
+
+  public void setVuelto(Double vuelto) {
+    this.vuelto = vuelto;
+  }
+
+  public Double getIgv() {
+    return igv;
+  }
+
+  public void setIgv(Double igv) {
+    this.igv = igv;
+  }
+
   // Constructor vacío para guardar ventas
   public Venta() {
   }
+
 }
