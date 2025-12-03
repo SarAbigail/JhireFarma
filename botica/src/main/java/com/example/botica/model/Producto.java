@@ -18,6 +18,7 @@ public class Producto {
   private Integer visitas;
   private String categoria;
   private String marca;
+  private Integer stock;
 
   @ManyToMany
   @JoinTable(name = "producto_sintoma", joinColumns = @JoinColumn(name = "producto_id"), inverseJoinColumns = @JoinColumn(name = "sintoma_id"))
@@ -133,6 +134,14 @@ public class Producto {
 
   public void setSintomas(List<Sintoma> sintomas) {
     this.sintomas = sintomas;
+  }
+
+  public Integer getStock() {
+    return stock;
+  }
+
+  public void setStock(Integer stock) {
+    this.stock = stock;
   }
 
 }

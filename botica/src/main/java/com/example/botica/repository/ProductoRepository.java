@@ -32,6 +32,16 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
   // Obtiene nombre de productos
   List<Producto> findByNombreContainingIgnoreCase(String nombre);
 
-  Optional<Producto> findById(Long productoId);
+  Optional<Producto> findById(Integer productoId);
+
+  // Productos con inventario bajo
+
+  // Contador
+  @Query("SELECT COUNT(p) FROM Producto p WHERE p.stock <= :umbral")
+  Integer contarInventarioBajo(@Param("umbral") Integer umbral);
+
+  // Detalle
+  @Query("SELECT p FROM Producto p WHERE p.stock <= :umbral ORDER BY p.stock ASC")
+  List<Producto> inventarioBajo(@Param("umbral") Integer umbral);
 
 }

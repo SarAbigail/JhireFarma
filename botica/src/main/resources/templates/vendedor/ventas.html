@@ -14,7 +14,7 @@
     crossorigin="anonymous"></script>
 </head>
 <style>
-  @media print {
+  /* @media print {
     body * {
       visibility: hidden;
     }
@@ -29,6 +29,41 @@
       left: 0;
       top: 0;
     }
+  } */
+  /* ————— SOLO IMPRIMIR EL COMPROBANTE ————— */
+  @media print {
+    body * {
+      visibility: hidden;
+      /* Oculta todo */
+    }
+
+    #comprobante,
+    #comprobante * {
+      visibility: visible;
+      /* Muestra solo el comprobante */
+    }
+
+    #comprobante {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 80mm;
+      /* Formato ticket */
+      padding: 10px;
+      background: white;
+    }
+  }
+
+  /* Estilo básico para que el comprobante se vea más bonito */
+  #comprobante {
+    font-family: Arial;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  #comprobante table th,
+  #comprobante table td {
+    padding: 3px 0;
   }
 </style>
 
@@ -179,7 +214,7 @@
       </div>
     </div>
   </div>
-  <div id="comprobante" style="display: none;">
+  <!-- <div id="comprobante" style="display: none;">
     <h3>Boleta</h3>
     <p>Serie: <span id="comp-serie"></span></p>
     <p>Número: <span id="comp-numero"></span></p>
@@ -200,12 +235,74 @@
       </thead>
       <tbody id="comp-detalles"></tbody>
     </table>
+  </div> -->
+  <div id="comprobante" style="display:none; font-family: Arial; width: 80mm;">
+
+    <!-- HEADER SUNAT -->
+    <div style="text-align:center;">
+      <h2 style="margin:0;">JHIRE FARMA</h2>
+      <p style="margin:0;">RUC: 12345678901</p>
+      <p style="margin:0;">Av. Ejemplo 123 – Lima</p>
+      <p style="margin:0;">Tel: 999 999 999</p>
+      <hr>
+    </div>
+
+    <!-- TIPO DE COMPROBANTE -->
+    <div style="text-align:center; margin-top:5px; margin-bottom:5px;">
+      <strong>BOLETA DE VENTA ELECTRÓNICA</strong><br>
+      <strong><span id="comp-serie"></span>-<span id="comp-numero"></span></strong>
+    </div>
+
+    <!-- DATOS -->
+    <p><strong>Fecha:</strong> <span id="comp-fecha"></span></p>
+    <p><strong>Hora:</strong> <span id="comp-hora"></span></p>
+    <p><strong>Cliente:</strong> <span id="comp-cliente"></span></p>
+
+    <hr>
+
+    <!-- DETALLES -->
+    <table style="width:100%; font-size:13px;">
+      <thead>
+        <tr>
+          <th style="text-align:left;">Descripción</th>
+          <th style="text-align:center;">Cant.</th>
+          <th style="text-align:right;">Importe</th>
+        </tr>
+      </thead>
+      <tbody id="comp-detalles"></tbody>
+    </table>
+
+    <hr>
+
+    <!-- TOTALES SUNAT -->
+    <table style="width:100%; font-size:14px;">
+      <tr>
+        <td>IGV (18%):</td>
+        <td style="text-align:right;">S/ <span id="comp-igv"></span></td>
+      </tr>
+      <tr>
+        <td><strong>Total:</strong></td>
+        <td style="text-align:right;"><strong>S/ <span id="comp-total"></span></strong></td>
+      </tr>
+      <tr>
+        <td>Efectivo:</td>
+        <td style="text-align:right;">S/ <span id="comp-efectivo"></span></td>
+      </tr>
+      <tr>
+        <td>Vuelto:</td>
+        <td style="text-align:right;">S/ <span id="comp-vuelto"></span></td>
+      </tr>
+    </table>
+
+    <hr>
+
+    <p style="text-align:center;">¡Gracias por su compra!</p>
+
   </div>
 
 </body>
 
 </html>
-
 <script>
   //Para setear la fecha de emisión en hoy
   document.getElementById("fechaEmision").valueAsDate = new Date();
@@ -414,7 +511,6 @@
       serie: serie,
       numero: numero
     };
-    console.log("venta:", venta);
     fetch("/api/ventas", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -422,16 +518,18 @@
     })
       .then(res => res.text())
       .then(() => {
-        console.log("respuesta", venta);
         let modal = new bootstrap.Modal(document.getElementById('ventaModal'));
-        imprimirComprobante(venta)
         modal.show();;
+        llenarComprobante(venta)
       });
   }
   // ============================================================
   // ===============   FUNCION: Imprimir comprobante   ==========
   // ============================================================
-  function imprimirComprobante(venta) {
+  function llenarComprobante(venta) {
+    const fecha = new Date();
+    const fechaTexto = fecha.toLocaleDateString();
+    const horaTexto = fecha.toLocaleTimeString();
     // Datos
     document.querySelector("#comp-serie").textContent = venta.serie;
     document.querySelector("#comp-numero").textContent = venta.numero;
@@ -440,6 +538,8 @@
     document.querySelector("#comp-igv").textContent = venta.igv;
     document.querySelector("#comp-efectivo").textContent = venta.efectivo;
     document.querySelector("#comp-vuelto").textContent = venta.vuelto;
+    document.querySelector("#comp-fecha").textContent = fechaTexto;
+    document.querySelector("#comp-hora").textContent = horaTexto;
 
     // Detalles
     const tbody = document.querySelector("#comp-detalles");
@@ -453,17 +553,18 @@
       `;
       tbody.appendChild(tr);
     });
+  }
 
-    // Mostrar temporalmente
+  function imprimirComprobante() {
+    // Mostrar div
     const comp = document.querySelector("#comprobante");
     comp.style.display = "block";
 
     // Ejecutar impresión
     window.print();
 
-    // Ocultarlo otra vez
+    // Ocultar div
     comp.style.display = "none";
-
     reiniciarVenta();
   }
 

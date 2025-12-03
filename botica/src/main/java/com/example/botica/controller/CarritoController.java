@@ -26,7 +26,7 @@ public class CarritoController {
 
   @PostMapping("/agregar")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void agregarAlCarrito(@RequestParam("productoId") Long productoId, HttpSession session) {
+  public void agregarAlCarrito(@RequestParam("productoId") Integer productoId, HttpSession session) {
     Producto producto = productoService.buscarPorId(productoId);
     if (producto != null) {
       carritoService.agregarProducto(session, producto);

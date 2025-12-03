@@ -20,13 +20,6 @@ public class VentaController {
   @Autowired
   private VentaService ventaService;
 
-  @GetMapping("/ventas/ñ")
-  public String verProductos(Model model) {
-    List<Producto> productos = productoRepository.findAll();
-    model.addAttribute("productos", productos);
-    return "vendedor/ventas";
-  }
-
   @GetMapping("/ventas")
   public String nuevaVenta(Model model) {
     Venta venta = ventaService.prepararNuevaVenta();

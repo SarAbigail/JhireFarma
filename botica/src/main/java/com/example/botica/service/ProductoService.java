@@ -38,7 +38,7 @@ public class ProductoService {
     return repo.findTop5MarcasByCategoria(categoria);
   }
 
-  public Producto buscarPorId(Long productoId) {
+  public Producto buscarPorId(Integer productoId) {
     return repo.findById(productoId).orElse(null);
   }
 

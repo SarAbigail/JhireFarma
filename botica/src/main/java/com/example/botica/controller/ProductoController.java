@@ -20,7 +20,7 @@ public class ProductoController {
 
   // Mostrar detalle de un producto
   @GetMapping("/{id}")
-  public String detalle(@PathVariable Long id, Model model) {
+  public String detalle(@PathVariable Integer id, Model model) {
     Producto producto = productoService.buscarPorId(id);
     if (producto == null) {
       return "redirect:/busqueda";

@@ -42,10 +42,6 @@ public class VentaService {
     return v;
   }
 
-  // public Venta guardarVenta(Venta venta) {
-  // return ventaRepository.save(venta);
-  // }
-
   public Venta registrarVenta(Venta ventaRecibida) {
     Venta venta = new Venta();
     venta.setSerie(ventaRecibida.getSerie());

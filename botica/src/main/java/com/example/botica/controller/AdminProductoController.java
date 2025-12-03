@@ -78,7 +78,7 @@ public class AdminProductoController {
 
   // Editar producto
   @GetMapping("/productos/editar/{id}")
-  public String editarProducto(@PathVariable Long id, Model model) {
+  public String editarProducto(@PathVariable Integer id, Model model) {
     Producto producto = productoService.buscarPorId(id);
     if (producto == null) {
       // Si no existe, redirige al listado con mensaje de error
