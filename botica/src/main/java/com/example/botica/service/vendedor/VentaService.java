@@ -36,9 +36,7 @@ public class VentaService {
         : Integer.parseInt(ultimo) + 1;
 
     v.setSerie(serie);
-    v.setNumero(String.format("%06d", siguiente)); // ahora sí
-    System.out.println("NUMERO GENERADO = " + v.getNumero());
-
+    v.setNumero(String.format("%06d", siguiente));
     return v;
   }
 

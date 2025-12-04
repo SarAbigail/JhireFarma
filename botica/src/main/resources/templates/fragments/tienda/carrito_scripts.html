@@ -1,7 +1,6 @@
 <div th:fragment="carritoScripts">
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-
       function actualizarCarrito() {
         fetch('/carrito/fragmento')
           .then(res => res.text())
@@ -39,14 +38,16 @@
 
       // Eliminar productos
       document.addEventListener('click', function (e) {
-        console.log("eliminar" + e.target.getAttribute('data-id'));
         if (e.target.classList.contains('eliminar-producto-btn')) {
           const id = e.target.getAttribute('data-id');
-          const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-          const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+          // const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+          // const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
           fetch('/carrito/eliminar', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded', [header]: token },
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+              //, [header]: token
+            },
             body: `productoId=${id}`
           }).then(() => actualizarCarrito());
         }

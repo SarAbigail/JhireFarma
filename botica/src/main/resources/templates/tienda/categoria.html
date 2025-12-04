@@ -12,18 +12,15 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
-  <meta name="_csrf" th:content="${_csrf.token}" />
-  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+  <!-- <meta name="_csrf" th:content="${_csrf.token}">
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"> -->
 </head>
 
 <body>
-
   <!-- Navegación principal -->
-  <div th:replace="fragments/navbar_tienda :: mainNavBar"></div>
-
+  <div th:replace="fragments/tienda/navbar_tienda :: mainNavBar"></div>
   <!-- Navegación secundaria (categorías) -->
-  <div th:replace="fragments/navbar_tienda :: secondaryNavBar"></div>
-
+  <div th:replace="fragments/tienda/navbar_tienda :: secondaryNavBar"></div>
   <!-- Marcas destacadas -->
   <div class="container my-4">
     <h6 class="mb-3 text-secondary small">Marcas más populares en <span th:text="${categoria}"></span></h6>
@@ -32,7 +29,6 @@
         class="btn btn-outline-secondary btn-sm text-uppercase" th:text="${marca}"></a>
     </div>
   </div>
-
   <!-- Contenido principal -->
   <div class="container my-4">
     <div class="row">
@@ -49,7 +45,6 @@
           </form>
         </div>
       </aside>
-
       <!-- Productos -->
       <main class="col-md-9">
         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -61,10 +56,9 @@
             <option>Más visitados</option>
           </select>
         </div>
-
         <div class="row row-cols-1 row-cols-md-4 g-4">
           <div class="col" th:each="producto : ${productos}">
-            <div th:replace="fragments/card_producto :: card_producto"></div>
+            <div th:replace="fragments/tienda/card_producto :: card_producto"></div>
           </div>
         </div>
       </main>
@@ -74,7 +68,7 @@
   <div class="offcanvas offcanvas-end" tabindex="-1" id="carritoOffcanvas">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title">
-        Mi Carrito (<span class="size-carrito" th:text="${#lists.size(carrito)}">0</span>)
+        Mi Carrito (<span class="size-carrito" th:text="${carritoCantidadTotal}">0</span>)
       </h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
@@ -82,9 +76,8 @@
       Cargando...
     </div>
   </div>
-
   <!-- Scripts del carrito -->
-  <div th:replace="fragments/carrito_scripts :: carritoScripts"></div>
+  <div th:replace="fragments/tienda/carrito_scripts :: carritoScripts"></div>
   <!-- Modal de login -->
   <div th:replace="fragments/login_modal :: loginModal"></div>
 </body>

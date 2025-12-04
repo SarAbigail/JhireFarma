@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Reservas</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link href=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div th:replace="fragments/sidebar_pos::hamburgerBtnMobile"></div>
+  <div class="container-fluid">
+    <div class="row">
+      <div th:replace="fragments/sidebar_pos::sidebarMenuDesktop"></div>
+      <div th:replace="fragments/sidebar_pos::sidebarMenuMobile"></div>
+      <!-- Contenido principal -->
+      <main class="col-md-9 col-lg-10 bg-light-custom">
+        <div class="row p-4 rounded">
+          <h2>Detalle del Pedido N° <span th:text="${pedido.id}"></span></h2>
+          <p><strong>Cliente:</strong> <span th:text="${pedido.nombreRecojo}"></span></p>
+          <p><strong>Fecha:</strong> <span th:text="${pedido.fecha}"></span></p>
+          <p><strong>Método Pago:</strong> <span th:text="${pedido.metodoPago}"></span></p>
+          <p><strong>Observaciones:</strong> <span th:text="${pedido.observaciones}"></span></p>
+          <hr>
+          <h4>Productos:</h4>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Producto ID</th>
+                <th>Cantidad</th>
+                <th>Precio Unit.</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="d : ${pedido.detalles}">
+                <td th:text="${d.productoId}"></td>
+                <td th:text="${d.cantidad}"></td>
+                <td th:text="${d.precioUnitario}"></td>
+                <td th:text="${d.subtotal}"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+
+</html>

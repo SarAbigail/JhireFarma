@@ -22,12 +22,12 @@ document.addEventListener("DOMContentLoaded", () => {
           if (productos.length === 0) {
             resultados.innerHTML = `<div class="p-2 text-muted">No se encontraron productos</div>`;
           } else {
-            console.log(productos);
+            console.log("api_productos", productos);
             // Mapeamos los productos
             let html = productos
               .map(
                 (p) => `
-          <a th:href="@{'/producto/' + ${p.id}}" th:fragment="card_producto(producto)" class="text-decoration-none text-reset">
+<a href="/producto/${p.id}" class="text-decoration-none text-reset">
   <div class="card mb-3 shadow-sm">
     <div class="row g-0 align-items-center">
       <div class="col-md-2 text-center">
@@ -46,21 +46,18 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       <div class="col-md-3">
         <div class="d-flex align-items-center justify-content-center mt-2">
-          <form th:action="@{/carrito/agregar}" method="post" class="mb-0">
-            <input type="hidden" th:name="productoId" th:value="${p.id}">
-            <button type="submit" class="btn btn-main btn-sm px-3">
-              Agregar al carrito
-            </button>
-          </form>
+          <button class="btn btn-main btn-sm px-3 btn-add-carrito"
+                  data-id="${p.id}">
+            Agregar al carrito
+          </button>
         </div>
       </div>
     </div>
   </div>
 </a>
-        `
+`
               )
               .join("");
-
             // Enlace para ver todos los resultados
             html += `
           <div 
@@ -100,3 +97,38 @@ function enviarBusqueda(event) {
   // Deja que el formulario se envíe normalmente a /buscar?query=...
   return true;
 }
+
+//Para que funcione el agregar al carrito desde resultados de búsqueda
+//// Función para actualizar el número del carrito
+function actualizarCarritoBadge() {
+  fetch("/carrito/cantidad")
+    .then((resp) => resp.text())
+    .then((cantidad) => {
+      const badge = document.querySelector(".cart-badge");
+      if (badge) badge.textContent = cantidad;
+    })
+    .catch((err) => console.error("Error actualizando badge:", err));
+}
+
+// Delegación de eventos para botones "Agregar al carrito"
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".btn-add-carrito");
+  if (!btn) return;
+
+  e.preventDefault();
+
+  const id = btn.dataset.id;
+  if (!id) return console.error("No se encontró data-id en el botón");
+
+  fetch("/carrito/agregar", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `productoId=${encodeURIComponent(id)}`,
+  })
+    .then((resp) => {
+      if (!resp.ok) throw new Error("Error en respuesta del servidor");
+      console.log(`✔ Producto ${id} agregado al carrito`);
+      actualizarCarritoBadge();
+    })
+    .catch((err) => console.error("Error agregando producto:", err));
+});

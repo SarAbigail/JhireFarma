@@ -1,4 +1,4 @@
-package com.example.botica.controller;
+package com.example.botica.controller.tienda;
 
 import com.example.botica.service.ProductoService;
 import org.springframework.stereotype.Controller;
@@ -19,6 +19,6 @@ public class InicioController {
     // Agregar los 5 productos más buscados
     model.addAttribute("productosMasBuscados", productoService.obtenerMasBuscados());
     model.addAttribute("cantidadProductos", 0);
-    return "inicio";
+    return "tienda/inicio";
   }
 }

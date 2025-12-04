@@ -26,7 +26,7 @@ public class ProductoController {
       return "redirect:/busqueda";
     }
     model.addAttribute("producto", producto);
-    return "producto";
+    return "/tienda/producto";
   }
 
   // ------------------------------------------

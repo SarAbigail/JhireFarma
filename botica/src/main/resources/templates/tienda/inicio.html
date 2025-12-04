@@ -17,11 +17,9 @@
 <body>
 
   <!-- Navegación principal -->
-  <div th:replace="fragments/navbar_tienda :: mainNavBar"></div>
-
+  <div th:replace="fragments/tienda/navbar_tienda :: mainNavBar"></div>
   <!-- Navegación secundaria (categorías) -->
-  <div th:replace="fragments/navbar_tienda :: secondaryNavBar"></div>
-
+  <div th:replace="fragments/tienda/navbar_tienda :: secondaryNavBar"></div>
   <!-- CARRUSEL -->
   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -71,7 +69,7 @@
     <div class="row row-cols-1 row-cols-md-5 g-4">
       <!-- Card generado dinámicamente -->
       <div class="col" th:each="producto : ${productosMasBuscados}">
-        <div th:replace="fragments/card_producto :: card_producto"></div>
+        <div th:replace="fragments/tienda/card_producto :: card_producto"></div>
       </div>
     </div>
   </section>
@@ -80,7 +78,7 @@
   <div class="offcanvas offcanvas-end" tabindex="-1" id="carritoOffcanvas">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title">
-        Mi Carrito (<span class="size-carrito" th:text="${#lists.size(carrito)}">0</span>)
+        Mi Carritoo (<span class="size-carrito" th:text="${carritoCantidadTotal}">0</span>)
       </h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
@@ -88,12 +86,12 @@
       Cargando...
     </div>
   </div>
-
   <!-- Scripts del carrito -->
-  <div th:replace="fragments/carrito_scripts :: carritoScripts"></div>
+  <div th:replace="fragments/tienda/carrito_scripts :: carritoScripts"></div>
   <!-- Modal de login -->
   <div th:replace="fragments/login_modal :: loginModal"></div>
 </body>
 
 </html>
+<!-- Para buscador de productos -->
 <script th:src="@{/js/api_productos.js}"></script>

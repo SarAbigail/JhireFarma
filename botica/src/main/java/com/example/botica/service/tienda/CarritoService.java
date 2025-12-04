@@ -1,13 +1,31 @@
-package com.example.botica.service;
+package com.example.botica.service.tienda;
 
 import java.util.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.example.botica.model.Producto;
+import com.example.botica.model.tienda.Carrito;
+import com.example.botica.model.tienda.CarritoItem;
+import com.example.botica.model.tienda.Usuario;
+import com.example.botica.repository.tienda.CarritoItemRepository;
+import com.example.botica.repository.tienda.CarritoRepository;
+import com.example.botica.repository.tienda.UsuarioRepository;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
+
 public class CarritoService {
+  @Autowired
+  private CarritoRepository carritoRepo;
+  @Autowired
+  private CarritoItemRepository itemRepo;
+  @Autowired
+  private UsuarioRepository usuarioRepo;
   //
   private static final String SESSION_CARRITO = "carrito";
 
@@ -53,12 +71,12 @@ public class CarritoService {
   }
 
   // Eliminar producto del carrito
-  public void eliminarProducto(HttpSession session, Long productoId) {
+  public void eliminarProducto(HttpSession session, Integer productoId) {
     List<Producto> carrito = obtenerCarrito(session);
-    carrito.removeIf(p -> p.getId().equals(Long.valueOf(productoId)));
+    carrito.removeIf(p -> p.getId().equals(Integer.valueOf(productoId)));
   }
 
-  public void aumentarCantidad(HttpSession session, Long productoId) {
+  public void aumentarCantidad(HttpSession session, Integer productoId) {
     List<Producto> carrito = obtenerCarrito(session);
     for (Producto p : carrito) {
       if (p.getId().equals(productoId)) {
@@ -68,7 +86,7 @@ public class CarritoService {
     }
   }
 
-  public void disminuirCantidad(HttpSession session, Long productoId) {
+  public void disminuirCantidad(HttpSession session, Integer productoId) {
     List<Producto> carrito = obtenerCarrito(session);
     Iterator<Producto> iter = carrito.iterator();
     while (iter.hasNext()) {

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -22,7 +23,9 @@ public class SecurityConfig {
     http
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/", "/css/**", "/img/**", "/js/**", "/login", "/categoria/**",
+            .requestMatchers("/", "/css/**", "/img/**", "/js/**", "/login", "/registro",
+                "/registro/**",
+                "/categoria/**",
                 "/api/**", "/carrito/**", "/producto/**")
             .permitAll()
             .requestMatchers("/administracion/**").hasRole("ADMIN")
@@ -48,4 +51,10 @@ public class SecurityConfig {
     authProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
     return authProvider;
   }
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return NoOpPasswordEncoder.getInstance(); // contraseña en texto plano
+  }
+
 }

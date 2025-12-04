@@ -29,9 +29,9 @@ public class VentaController {
     return "vendedor/ventas";
   }
 
-  @GetMapping("/vendedor/reservas")
-  public String reservas(Model model) {
+  // @GetMapping("/vendedor/reservas")
+  // public String reservas(Model model) {
 
-    return "vendedor/reservas";
-  }
+  // return "vendedor/reservas";
+  // }
 }

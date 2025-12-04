@@ -1,4 +1,4 @@
-package com.example.botica.controller;
+package com.example.botica.controller.tienda;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +9,6 @@ import com.example.botica.repository.ProductoRepository;
 
 @Controller
 public class BusquedaController {
-
   private ProductoRepository productoRepository;
 
   @Autowired
@@ -22,6 +21,6 @@ public class BusquedaController {
   public String buscarProductos(@RequestParam("query") String query, Model model) {
     model.addAttribute("productos", productoRepository.buscarPorVariosCampos(query));
     model.addAttribute("query", query);
-    return "busqueda";
+    return "/tienda/busqueda";
   }
 }
