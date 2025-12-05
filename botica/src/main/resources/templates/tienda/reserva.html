@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reservar Pedido</title>
-
   <link rel="stylesheet" th:href="@{/css/style.css}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -95,28 +94,56 @@
         </div>
 
         <!-- Card: Quién recoge -->
-        <div class="card shadow-sm p-4 mb-4">
+        <!-- <div class="card shadow-sm p-4 mb-4">
           <h5><i class="bi bi-person-check text-primary me-2"></i> ¿Quién recogerá el pedido?</h5>
           <div class="form-check mt-2">
             <input class="form-check-input" type="radio" name="recoger" id="recogerYo" value="yo" checked>
-            <label class="form-check-label" for="recogerYo">Yo</label>
+            <label class="form-check-label" for="recogerYo">
+              Yo
+              <span th:if="${usuarioLogueado != null}" th:text="'('+ ${usuarioLogueado.nombre} + ')"></span>
+              <span th:if="${usuarioLogueado == null}">Invitado</span>
+            </label>
           </div>
           <div class="form-check mb-2">
             <input class="form-check-input" type="radio" name="recoger" id="recogerOtro" value="otro">
             <label class="form-check-label" for="recogerOtro">Otra persona</label>
           </div>
           <input type="text" id="nombreOtro" class="form-control d-none" placeholder="Nombre de otra persona">
+        </div> -->
+
+        <div class="card shadow-sm p-4 mb-4">
+          <h5><i class="bi bi-person-check text-primary me-2"></i> ¿Quién recogerá el pedido?</h5>
+
+          <!-- Usuario logueado -->
+          <div th:if="${usuarioLogueado != null}">
+            <div class="form-check mt-2">
+              <input class="form-check-input" type="radio" name="recoger" id="recogerYo"
+                th:value="${usuarioLogueado.nombre}" checked>
+              <label class="form-check-label" for="recogerYo">
+                Yo (<span th:text="${usuarioLogueado.nombre}"></span>)
+              </label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="recoger" id="recogerOtro" value="otro">
+              <label class="form-check-label" for="recogerOtro">Otra persona</label>
+            </div>
+            <input type="text" id="nombreOtro" class="form-control d-none" placeholder="Nombre de otra persona">
+          </div>
+
+          <!-- Usuario no logueado -->
+          <div th:if="${usuarioLogueado == null}">
+            <input class="form-check-input" type="radio" name="recoger" id="recogerOtro" value="otro" hidden checked>
+            <label class="form-check-label" for="recogerOtro" hidden>Otra persona</label>
+            <input type="text" id="nombreOtro" class="form-control" placeholder="Escriba su nombre" required>
+          </div>
         </div>
 
         <!-- Card: Horario -->
         <div class="card shadow-sm p-4 mb-4">
           <h5><i class="bi bi-clock-history text-primary me-2"></i> Horario de recojo</h5>
           <p class="mb-0 small text-muted">
-            Estimamos que tu pedido estará listo desde el <strong>miércoles 30/10</strong> a las 10:00 AM.
-            Te enviaremos un mensaje cuando esté disponible.
-            Una vez listo, tendrás hasta el <strong>jueves 31/10</strong> para recogerlo.
-            Recuerda traer tu DNI físico.
-          </p>
+            Puedes recoger tu pedido hasta <strong>1 semana</strong> después de reservarlo. <br>
+            Nuestro horario de atención es de 8:00 AM a 11:00 PM, todos los días </p>
         </div>
 
         <!-- Card: Pago -->
@@ -124,7 +151,6 @@
           <h5><i class="bi bi-cash-stack text-primary me-2"></i> Información de pago</h5>
           <p class="text-muted mb-0">Puedes pagar en efectivo o con billeteras digitales.</p>
         </div>
-
       </div>
 
       <!-- Columna derecha -->
@@ -164,7 +190,7 @@
             *El costo del delivery se paga <strong>contraentrega</strong> y no está incluido en el total.
           </p>
 
-          <button class="btn btn-success w-100 mt-2" id="btnReservarAhora">
+          <button class="btn btn-success w-100 mt-2" id="btnReservarAhora" disabled>
             <i class="bi bi-bag-check me-2"></i> Reservar ahora
           </button>
         </div>
@@ -172,28 +198,24 @@
     </div>
   </div>
 
-  <form th:action="@{/reserva/guardar}" th:object="${pedido}" method="post">
+  <form th:action="@{/pedido/guardar}" th:object="${pedido}" method="post" hidden>
     <label>Delivery</label>
     <input type="checkbox" th:field="*{delivery}" class="" id="delivery" /> <br>
     <label>Nombre de quien recoge</label>
     <input type="text" th:field="*{nombreRecojo}" class="form-control" id="nombreRecojo" />
-
-    <label>Horario de Recojo</label>
-    <input type="time" th:field="*{horarioRecojo}" class="form-control" id="horarioRecojo" />
-
+    <!-- <label>Horario de Recojo</label>
+    <input type="time" th:field="*{horarioRecojo}" class="form-control" id="horarioRecojo" /> -->
     <label>Lugar de Recojo</label>
     <input type="text" th:field="*{recojo}" class="form-control" id="lugarRecojo" />
-
-    <label>Método de Pago</label>
+    <!-- Por el momento no se guardará -->
+    <!-- <label>Método de Pago</label>
     <select th:field="*{metodoPago}" class="form-select" id="metodoPago">
       <option value="YAPE">Yape</option>
       <option value="PLIN">Plin</option>
       <option value="EFECTIVO">Efectivo</option>
-    </select>
-
-    <label>Observaciones</label>
-    <textarea th:field="*{observaciones}" class="form-control" id="observaciones"></textarea>
-
+    </select> -->
+    <!-- <label>Observaciones</label>
+    <textarea th:field="*{observaciones}" class="form-control" id="observaciones"></textarea> -->
     <label>Total</label>
     <input type="text" th:field="*{total}" class="form-control" id="total" />
     <button class="btn btn-primary mt-3" id="btnGuardarReserva">Guardar Reserva</button>
@@ -216,27 +238,65 @@
   let btnGuardarReserva = document.getElementById("btnGuardarReserva");
   let btnReservarAhora = document.getElementById("btnReservarAhora");
 
+  console.log(recogerYo)
+  console.log(recogerOtro)
+  console.log(nombreRecogerOtro)
+
+
+  // btnReservarAhora.addEventListener("click", () => {
+  //   //Setea método de entrega y lugar de recojo
+  //   if (tipoEntrega.value == "direccion") {
+  //     delivery.checked = true;
+  //     lugarRecojo.value = dirección.value;
+  //   } else {
+  //     delivery.checked = false;
+  //     lugarRecojo.value = "Av. Cajamarca Sur";
+  //   }
+  //   //Setea persona para recojo
+  //   if (recogerYo != null) {
+  //     if (recogerYo.checked == true) {
+  //       nombreRecojo.value = recogerYo.value;
+  //     } else {
+  //       nombreRecojo.value = nombreRecogerOtro.value;
+  //     }
+  //   } else {
+  //     nombreRecojo.value = nombreRecogerOtro.value;
+  //   }
+
+  //   //Setea total
+  //   total.value = totalTxt.textContent;
+
+  //   btnGuardarReserva.click();
+  // })
+
+  // Click en "Reservar ahora"
   btnReservarAhora.addEventListener("click", () => {
-    //Setea método de entrega y lugar de recojo
-    if (tipoEntrega.value == "direccion") {
-      delivery.checked = true;
-      lugarRecojo.value = dirección.value;
-    } else {
-      delivery.checked = false;
-      lugarRecojo.value = "botica";
-    }
-    //Setea persona para recojo
-    if (recogerYo.checked == true) {
-      nombreRecojo.value = "usuario"
-    } else {
-      nombreRecojo.value = nombreRecogerOtro.value;
-    }
-    //Setea total
-    total.value = totalTxt.textContent;
+    if (!btnReservarAhora.disabled) {
+      //Setea método de entrega y lugar de recojo
+      if (tipoEntrega.value == "direccion") {
+        delivery.checked = true;
+        lugarRecojo.value = dirección.value;
+      } else {
+        delivery.checked = false;
+        lugarRecojo.value = "Av. Cajamarca Sur";
+      }
+      //Setea persona para recojo
+      if (recogerYo != null) {
+        if (recogerYo.checked == true) {
+          nombreRecojo.value = recogerYo.value;
+        } else {
+          nombreRecojo.value = nombreRecogerOtro.value;
+        }
+      } else {
+        nombreRecojo.value = nombreRecogerOtro.value;
+      }
 
-    btnGuardarReserva.click();
-  })
+      //Setea total
+      total.value = totalTxt.textContent;
 
+      btnGuardarReserva.click();
+    }
+  });
 
   function mostrarOpcionesEntrega(valor) {
     const dir = document.getElementById("opcionDireccion");
@@ -249,10 +309,44 @@
   }
 
   // Mostrar campo "Otra persona"
-  document.getElementById("recogerOtro").addEventListener("change", () => {
-    document.getElementById("nombreOtro").classList.remove("d-none");
-  });
-  document.getElementById("recogerYo").addEventListener("change", () => {
-    document.getElementById("nombreOtro").classList.add("d-none");
-  });
+  if (recogerOtro != null) {
+    document.getElementById("recogerOtro").addEventListener("change", () => {
+      document.getElementById("nombreOtro").classList.remove("d-none");
+    });
+  }
+  if (recogerYo != null) {
+    document.getElementById("recogerYo").addEventListener("change", () => {
+      document.getElementById("nombreOtro").classList.add("d-none");
+    });
+  }
+
+
+
+  // Función para validar antes de reservar
+  function validarReserva() {
+    let carritoVacio = totalTxt.textContent.trim() === "0.00";
+    let entregaSeleccionada = tipoEntrega.value === "direccion" || tipoEntrega.value === "botica";
+    let nombreRecogidaValido = true;
+
+    if (tipoEntrega.value === "direccion") {
+      nombreRecogidaValido = dirección.value.trim() !== "";
+    }
+
+    if (recogerYo != null && recogerYo.checked) {
+      nombreRecogidaValido = true; // nombre ya viene del usuario logueado
+    } else if (nombreRecogerOtro != null) {
+      nombreRecogidaValido = nombreRecogerOtro.value.trim() !== "";
+    }
+
+    // Habilitar o deshabilitar el botón
+    btnReservarAhora.disabled = carritoVacio || !entregaSeleccionada || !nombreRecogidaValido;
+  }
+
+  // Ejecutar validación cuando cambian campos
+  tipoEntrega.addEventListener("change", validarReserva);
+  if (nombreRecogerOtro != null) nombreRecogerOtro.addEventListener("input", validarReserva);
+  if (dirección != null) dirección.addEventListener("input", validarReserva);
+
+  // Validar al cargar la página
+  validarReserva();
 </script>

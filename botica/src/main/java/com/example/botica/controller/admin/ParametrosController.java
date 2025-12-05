@@ -76,7 +76,7 @@ public class ParametrosController {
 
     model.addAttribute("tabActiva", tabActiva);
 
-    return "parametros";
+    return "/admin/parametros";
   }
 
   // --------- GUARDAR CATEGORIA ---------

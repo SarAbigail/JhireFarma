@@ -11,7 +11,6 @@ public class Pedido {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
-
   private LocalDate fecha;
   private String estado;
   private String metodoPago;
@@ -22,8 +21,9 @@ public class Pedido {
   private String observaciones;
   private boolean delivery;
 
-  @Column(name = "usuario_id")
-  private Integer usuarioId;
+  @ManyToOne
+  @JoinColumn(name = "usuario_id")
+  private Usuario usuario;
 
   @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<DetallePedido> detalles;
@@ -100,14 +100,6 @@ public class Pedido {
     this.observaciones = observaciones;
   }
 
-  public Integer getUsuarioId() {
-    return usuarioId;
-  }
-
-  public void setUsuarioId(Integer usuarioId) {
-    this.usuarioId = usuarioId;
-  }
-
   public List<DetallePedido> getDetalles() {
     return detalles;
   }
@@ -123,4 +115,13 @@ public class Pedido {
   public void setDelivery(boolean delivery) {
     this.delivery = delivery;
   }
+
+  public Usuario getUsuario() {
+    return usuario;
+  }
+
+  public void setUsuario(Usuario usuario) {
+    this.usuario = usuario;
+  }
+
 }

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Mi Perfil</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar bg-accent shadow-sm">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand fw-bold" th:href="@{/}">
+        JhireFarma
+      </a>
+    </div>
+  </nav>
+  <!-- Contenedor principal -->
+  <div class="container mt-4">
+    <!-- Botón volver al carrito -->
+    <a href="/" class="btn btn-outline-secondary mb-3">
+      <i class="bi bi-arrow-left"></i> Ir a Inicio
+    </a>
+    <h2>Mi Cuenta</h2>
+    <ul class="nav nav-tabs" id="perfilTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="datos-tab" data-bs-toggle="tab" data-bs-target="#datos" type="button"
+          role="tab">Mis Datos</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pedidos-tab" data-bs-toggle="tab" data-bs-target="#pedidos" type="button"
+          role="tab">Mis Pedidos</button>
+      </li>
+    </ul>
+    <div class="tab-content mt-3">
+      <!-- TAB: Mis Datos -->
+      <div class="tab-pane fade show active" id="datos" role="tabpanel">
+        <form th:action="@{/perfil/editar}" th:object="${usuario}" method="post">
+          <input type="hidden" th:field="*{id}">
+          <div class="mb-3">
+            <label>Nombre</label>
+            <input type="text" th:field="*{nombre}" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label>Email</label>
+            <input type="email" th:field="*{email}" class="form-control" readonly>
+          </div>
+          <div class="mb-3">
+            <label>Dirección</label>
+            <input type="text" th:field="*{direccion}" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label>Teléfono</label>
+            <input type="text" th:field="*{telefono}" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </form>
+      </div>
+
+      <!-- TAB: Mis Pedidos -->
+      <div class="tab-pane fade" id="pedidos" role="tabpanel">
+        <table class="table table-striped">
+          <thead class="table-dark">
+            <tr>
+              <th>Pedido ID</th>
+              <th>Fecha</th>
+              <th>Detalles</th>
+              <th>Total</th>
+              <th>Entrega</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="p : ${pedidos}">
+              <td th:text="${#numbers.formatInteger(p.id, 6)}"></td>
+              <td th:text="${p.horarioRecojo}"></td>
+              <td>
+                <ul class="mb-0">
+                  <li th:each="d : ${p.detalles}">
+                    <span th:text="${d.producto.nombre}"></span> <br>
+                    <span th:text="${d.cantidad}"></span> und <br>
+                    S/ <span th:text="${d.subtotal}"></span>
+                  </li>
+                </ul>
+              </td>
+              <td>S/ <span th:text="${p.total}"></span></td>
+              <td>
+                <span th:if="${p.delivery}">
+                  <strong>Delivery</strong><br>
+                  Dirección: <span th:text="${p.usuario.direccion}"></span><br>
+                  Recibe: <span th:text="${p.nombreRecojo}"></span>
+                </span>
+                <span th:if="${!p.delivery}">
+                  <strong>Recojo en tienda</strong><br>
+                  Dirección: <span th:text="${p.recojo}"></span><br>
+                  A nombre de: <span th:text="${p.nombreRecojo}"></span>
+                </span>
+              </td>
+              <td>
+                <span th:switch="${p.estado}">
+                  <span th:case="'PENDIENTE'" class="badge bg-info">PENDIENTE</span>
+                  <span th:case="'ENTREGADO'" class="badge bg-success">Entregado</span>
+                  <span th:case="'CANCELADO'" class="badge bg-danger">Cancelado</span>
+                  <span th:case="*" class="badge bg-secondary" th:text="${p.estado}"></span>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

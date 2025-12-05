@@ -1,5 +1,7 @@
 package com.example.botica.model.tienda;
 
+import com.example.botica.model.Producto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,11 +19,21 @@ public class DetallePedido {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
+  // @ManyToOne
+  // @JoinColumn(name = "pedido_id")
+  // private Pedido pedido;
+
   @ManyToOne
   @JoinColumn(name = "pedido_id")
   private Pedido pedido;
-  @Column(name = "producto_id")
-  private Integer productoId;
+
+  // @Column(name = "producto_id")
+  // private Integer productoId;
+
+  @ManyToOne
+  @JoinColumn(name = "producto_id")
+  private Producto producto;
+
   private Integer cantidad;
   private Double precioUnitario;
   private Double subtotal;
@@ -42,13 +54,13 @@ public class DetallePedido {
     this.pedido = pedido;
   }
 
-  public Integer getProductoId() {
-    return productoId;
-  }
+  // public Integer getProductoId() {
+  // return productoId;
+  // }
 
-  public void setProductoId(Integer productoId) {
-    this.productoId = productoId;
-  }
+  // public void setProductoId(Integer productoId) {
+  // this.productoId = productoId;
+  // }
 
   public Integer getCantidad() {
     return cantidad;
@@ -72,6 +84,14 @@ public class DetallePedido {
 
   public void setSubtotal(Double subtotal) {
     this.subtotal = subtotal;
+  }
+
+  public Producto getProducto() {
+    return producto;
+  }
+
+  public void setProducto(Producto producto) {
+    this.producto = producto;
   }
 
 }

@@ -127,8 +127,9 @@ document.addEventListener("click", (e) => {
   })
     .then((resp) => {
       if (!resp.ok) throw new Error("Error en respuesta del servidor");
-      console.log(`✔ Producto ${id} agregado al carrito`);
+      console.log(`Producto ${id} agregado al carrito`);
       actualizarCarritoBadge();
+      location.reload();
     })
     .catch((err) => console.error("Error agregando producto:", err));
 });

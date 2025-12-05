@@ -69,7 +69,9 @@
           <hr>
           <p>Total a pagar: <span th:text="'S/ ' + ${#numbers.formatDecimal(total, 1, 'POINT', 2, 'POINT')}">0.00</span>
           </p>
-          <a href="/pedido" class="btn btn-success w-100 mt-3">Ir a reservar</a>
+          <a href="/pedido" class="btn btn-success w-100 mt-3"
+            th:classappend="${#lists.isEmpty(carrito)} ? ' disabled' : ''"
+            th:attr="aria-disabled=${#lists.isEmpty(carrito)} ? 'true' : 'false'">Ir a reservar</a>
         </div>
       </div>
     </div>
@@ -79,7 +81,8 @@
   <div class="offcanvas offcanvas-end" tabindex="-1" id="carritoOffcanvas">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title">
-        Mi Carrito (<span class="size-carrito" th:text="${carritoCantidadTotal}">0</span>)
+        Mi Carrito
+        <!-- Mi Carrito (<span class="size-carrito" th:text="${carritoCantidadTotal}">0</span>) -->
       </h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
@@ -150,4 +153,6 @@
     });
 
   });
+
+
 </script>

@@ -33,13 +33,17 @@
         </button>
 
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" th:href="@{/tienda/mi-cuenta}">Mi cuenta</a></li>
-          <li><a class="dropdown-item" th:href="@{/mis-pedidos}">Mis pedidos</a></li>
+          <li><a class="dropdown-item" th:href="@{/mi-cuenta}">Mi perfil</a></li>
           <li>
             <hr class="dropdown-divider">
           </li>
-          <li><a class="dropdown-item text-danger" th:href="@{/logout}">Cerrar sesión</a></li>
+          <li>
+            <form th:action="@{/logout}" method="post" class="d-inline">
+              <button type="submit" class="dropdown-item text-danger">Cerrar sesión</button>
+            </form>
+          </li>
         </ul>
+
       </div>
 
       <!-- Carrito -->

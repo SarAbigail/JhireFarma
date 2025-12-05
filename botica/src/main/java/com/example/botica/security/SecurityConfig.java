@@ -3,6 +3,7 @@ package com.example.botica.security;
 import com.example.botica.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -24,9 +25,11 @@ public class SecurityConfig {
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/", "/css/**", "/img/**", "/js/**", "/login", "/registro",
-                "/registro/**",
+                "/registro/**", "/pedido", "/confirmacion-invitado", "/confirmacion-invitado/**",
                 "/categoria/**",
                 "/api/**", "/carrito/**", "/producto/**")
+            .permitAll()
+            .requestMatchers(HttpMethod.POST, "/pedido/guardar")
             .permitAll()
             .requestMatchers("/administracion/**").hasRole("ADMIN")
             .requestMatchers("/ventas/**").hasRole("VENDEDOR")
@@ -37,9 +40,8 @@ public class SecurityConfig {
             .permitAll())
         .logout(logout -> logout
             .logoutUrl("/logout")
-            .logoutSuccessUrl("/login?logout")
+            .logoutSuccessUrl("/")
             .permitAll());
-
     return http.build();
   }
 
