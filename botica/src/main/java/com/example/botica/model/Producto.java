@@ -34,13 +34,13 @@ public class Producto {
   private List<Sintoma> sintomas;
   @ManyToOne
   @JoinColumn(name = "marca_id")
-  private Marca marca_;
+  private Marca marcaId;
   @ManyToOne
   @JoinColumn(name = "categoria_id")
-  private Categoria categoria_;
+  private Categoria categoriaId;
   @ManyToOne
   @JoinColumn(name = "presentacion_id")
-  private Presentacion presentacion_;
+  private Presentacion presentacionId;
   @Transient
   private int cantidad = 1;
 
@@ -181,28 +181,28 @@ public class Producto {
     this.descripcion = descripcion;
   }
 
-  public Marca getMarca_() {
-    return marca_;
+  public Marca getMarcaId() {
+    return marcaId;
   }
 
-  public void setMarca_(Marca marca_) {
-    this.marca_ = marca_;
+  public void setMarcaId(Marca marca_) {
+    this.marcaId = marca_;
   }
 
-  public Categoria getCategoria_() {
-    return categoria_;
+  public Categoria getCategoriaId() {
+    return categoriaId;
   }
 
-  public void setCategoria_(Categoria categoria_) {
-    this.categoria_ = categoria_;
+  public void setCategoriaId(Categoria categoria_) {
+    this.categoriaId = categoria_;
   }
 
-  public Presentacion getPresentacion_() {
-    return presentacion_;
+  public Presentacion getPresentacionId() {
+    return presentacionId;
   }
 
-  public void setPresentacion_(Presentacion presentacion_) {
-    this.presentacion_ = presentacion_;
+  public void setPresentacionId(Presentacion presentacion_) {
+    this.presentacionId = presentacion_;
   }
 
 }
