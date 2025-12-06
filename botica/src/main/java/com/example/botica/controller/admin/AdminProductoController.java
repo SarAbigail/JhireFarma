@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.botica.model.Producto;
@@ -18,14 +16,6 @@ import com.example.botica.repository.MarcaRepository;
 import com.example.botica.repository.PresentacionRepository;
 import com.example.botica.service.ProductoService;
 import com.example.botica.service.SintomaService;
-
-// @Controller
-// public class AdminController {
-//   @GetMapping("/administracion")
-//   public String mostrarInicio() {
-//     return "administracion";
-//   }
-// }
 
 @Controller
 @RequestMapping("/admin")
@@ -41,12 +31,6 @@ public class AdminProductoController {
   private CategoriaRepository categoriaRepository;
   @Autowired
   private PresentacionRepository presentacionRepository;
-
-  // // Vista principal del módulo admin
-  // @GetMapping
-  // public String panelAdmin() {
-  // return "admin/index"; // puedes crear un menú o panel principal
-  // }
 
   // Listar productos
   @GetMapping("/productos")
@@ -64,7 +48,7 @@ public class AdminProductoController {
     model.addAttribute("categorias", categoriaRepository.findAll());
     model.addAttribute("presentaciones", presentacionRepository.findAll());
 
-    return "admin/form_producto";
+    return "admin/producto_form";
   }
 
   // Guardar producto
@@ -89,7 +73,7 @@ public class AdminProductoController {
     model.addAttribute("marcas", marcaRepository.findAll());
     model.addAttribute("categorias", categoriaRepository.findAll());
     model.addAttribute("presentaciones", presentacionRepository.findAll());
-    return "form_producto";
+    return "/admin/producto_form";
   }
 
   // Eliminar producto
