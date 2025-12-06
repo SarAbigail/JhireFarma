@@ -25,36 +25,60 @@
   <div class="container my-4">
     <h6 class="mb-3 text-secondary small">Marcas más populares en <span th:text="${categoria}"></span></h6>
     <div class="d-flex gap-2 flex-wrap">
-      <a th:each="marca : ${marcas}" th:href="@{|/categoria/${categoria}?marca=${marca}|}"
+      <a th:each="marca : ${top5Marcas}" th:href="@{|/categoria/${categoria}?marca=${marca}|}"
         class="btn btn-outline-secondary btn-sm text-uppercase" th:text="${marca}"></a>
     </div>
   </div>
   <!-- Contenido principal -->
   <div class="container my-4">
     <div class="row">
-      <!-- Sidebar izquierdo -->
+      <!-- Sidebar izquierdo de filtros -->
       <aside class="col-md-3 mt-md-5">
-        <div class="border rounded p-3 shadow-sm">
-          <h6>Filtros</h6>
-          <form>
-            <label class="form-label mt-2">Precio mínimo</label>
-            <input type="number" class="form-control" name="minPrecio">
-            <label class="form-label mt-2">Precio máximo</label>
-            <input type="number" class="form-control" name="maxPrecio">
+        <div class="border rounded p-3 shadow-sm" style="  position: sticky;
+  top: 80px;">
+          <h5>Filtros</h5>
+          <form method="get" th:action="@{'/categoria/' + ${categoriaSeleccionada}}">
+            <!-- Marca -->
+            <h6 class="mt-3">Marca</h6>
+            <select name="marca" class="form-select">
+              <option value="">Todas</option>
+              <option th:each="m : ${marcas}" th:value="${m}" th:text="${m}" th:selected="${m == marcaSel}">
+              </option>
+            </select>
+            <!-- Presentación -->
+            <h6 class="mt-3">Presentación</h6>
+            <select name="presentacion" class="form-select">
+              <option value="">Todas</option>
+              <option th:each="p : ${presentaciones}" th:value="${p}" th:text="${p}" th:selected="${p == presSel}">
+              </option>
+            </select>
+            <!-- Rango de precio -->
+            <label>Precio mínimo</label>
+            <input type="number" name="min" step="0.1" class="form-control" th:value="${minSel}">
+            <label>Precio máximo</label>
+            <input type="number" name="max" step="0.1" class="form-control" th:value="${maxSel}">
             <button class="btn btn-primary btn-sm mt-3 w-100">Filtrar</button>
+            <a th:href="@{'/categoria/' + ${categoriaSeleccionada}}"
+              class="btn btn-outline-secondary btn-sm mt-2 w-100">
+              Reiniciar filtros
+            </a>
           </form>
         </div>
       </aside>
+
       <!-- Productos -->
       <main class="col-md-9">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <p class="mb-0" th:text="${#lists.size(productos)} + ' resultados'"></p>
-          <select class="form-select form-select-sm w-auto">
-            <option>Ordenar por</option>
-            <option>Precio: menor a mayor</option>
-            <option>Precio: mayor a menor</option>
-            <option>Más visitados</option>
-          </select>
+        <div class="d-flex justify-content-between align-items-center">
+          <small class="mb-0" th:text="${#lists.size(productos)} + ' resultados'"></small>
+          <form method="get" class="d-flex justify-content-end mb-3"
+            th:action="@{'/categoria/' + ${categoriaSeleccionada}}">
+            <label class="mt-1 me-2">Ordenar:</label>
+            <select name="orden" class="form-select form-select-sm w-auto" onchange="this.form.submit()">
+              <option value="">Por defecto</option>
+              <option value="asc" th:selected="${ordenSel == 'asc'}">Precio: menor a mayor</option>
+              <option value="desc" th:selected="${ordenSel == 'desc'}">Precio: mayor a menor</option>
+            </select>
+          </form>
         </div>
         <div class="row row-cols-1 row-cols-md-4 g-4">
           <div class="col" th:each="producto : ${productos}">
@@ -84,79 +108,3 @@
 </body>
 
 </html>
-<!-- 
-<script>
-  // Actualizar el contenido del modal al abrirlo
-  document.addEventListener('DOMContentLoaded', function () {
-    var carritoModal = document.getElementById('carritoModal');
-    carritoModal.addEventListener('show.bs.modal', function () {
-      fetch('/carrito/fragmento')
-        .then(response => response.text())
-        .then(html => {
-          document.getElementById('modal-body-carrito').innerHTML = html;
-        });
-    });
-
-    //   // Interceptar todos los formularios de agregar al carrito
-    //   document.querySelectorAll('.agregar-carrito-form').forEach(form => {
-    //     form.addEventListener('submit', function (e) {
-    //       e.preventDefault(); // evitar submit normal
-    //       const formData = new FormData(form);
-    //       fetch(form.action, {
-    //         method: 'POST',
-    //         body: formData
-    //       })
-    //         .then(() => {
-    //           // Actualizar modal si está abierto
-    //           if (document.getElementById('carritoModal').classList.contains('show')) {
-    //             fetch('/carrito/fragmento')
-    //               .then(res => res.text())
-    //               .then(html => {
-    //                 document.getElementById('modal-body-carrito').innerHTML = html;
-    //               });
-    //           }
-    //         });
-    //     });
-    //   });
-  });
-</script> -->
-
-<!-- <script>
-  document.addEventListener('DOMContentLoaded', function () {
-
-    function actualizarCarrito() {
-      fetch('/carrito/fragmento')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('offcanvas-body-carrito').innerHTML = html;
-        });
-    }
-
-    // Abrir carrito
-    var offcanvasEl = document.getElementById('carritoOffcanvas');
-    offcanvasEl.addEventListener('show.bs.offcanvas', actualizarCarrito);
-
-    // Agregar productos
-    document.querySelectorAll('.agregar-carrito-form').forEach(form => {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const formData = new FormData(form);
-        fetch(form.action, { method: 'POST', body: formData })
-          .then(() => actualizarCarrito());
-      });
-    });
-
-    // Eliminar productos
-    document.addEventListener('click', function (e) {
-      if (e.target.classList.contains('eliminar-producto-btn')) {
-        const id = e.target.getAttribute('data-id');
-        fetch('/carrito/eliminar', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: `productoId=${id}`
-        }).then(() => actualizarCarrito());
-      }
-    });
-
-  });
-</script> -->

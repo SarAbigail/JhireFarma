@@ -17,7 +17,7 @@ public class InicioController {
   @GetMapping("/")
   public String inicio(Model model) {
     // Agregar los 5 productos más buscados
-    model.addAttribute("productosMasBuscados", productoService.obtenerMasBuscados());
+    model.addAttribute("productosMasBuscados", productoService.obtenerProductosMasBuscados());
     model.addAttribute("cantidadProductos", 0);
     return "tienda/inicio";
   }

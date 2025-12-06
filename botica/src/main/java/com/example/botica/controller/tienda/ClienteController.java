@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.botica.model.tienda.DetallePedido;
 import com.example.botica.model.tienda.Pedido;
 import com.example.botica.model.tienda.Usuario;
-import com.example.botica.repository.tienda.PedidoRepository;
-import com.example.botica.repository.tienda.UsuarioRepository;
+
 import com.example.botica.service.tienda.ClienteService;
 
 import jakarta.servlet.http.HttpSession;
