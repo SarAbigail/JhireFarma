@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.example.botica.model.Producto;
 import com.example.botica.model.tienda.DetallePedido;
 import com.example.botica.model.tienda.Pedido;
@@ -35,7 +38,15 @@ public class PedidoController {
   @Autowired
   private ClienteService clienteService;
 
-  // Mostrar página inicial de reserva
+  // -------------------------
+  // ADMIN
+  // -------------------------
+
+  // -------------------------
+  // TIENDA
+  // -------------------------
+
+  // MOSTRAR PÁGINA CON DATOS PARA CREAR LA RESERVA
   @GetMapping("")
   public String verReserva(Model model, HttpSession session) {
     List<Producto> carrito = carritoService.obtenerCarrito(session);
@@ -45,26 +56,11 @@ public class PedidoController {
     return "tienda/reserva";
   }
 
-  // Ver reserva usuario
-  @GetMapping("/mi_pedido")
-  public String miPedido(Model model, HttpSession session) {
-    return "tienda/mi_pedido";
-  }
-
-  // Ver reserva vendedor
-  //// Mostrar lista de reservas
-  @GetMapping("/lista")
-  public String verPedido(Model model, HttpSession session) {
-    model.addAttribute("reservas", pedidoService.listar());
-    return "vendedor/lista_pedido";
-  }
-
-  //// Mostrar detalle de reservas
-  @GetMapping("/detalle/{id}")
-  public String verDetallePedido(@PathVariable Integer id, Model model) {
-    model.addAttribute("pedido", pedidoService.obtenerPorId(id));
-    return "vendedor/lista_pedido_detalle";
-  }
+  // // VER RESERVA POR USUARIO
+  // @GetMapping("/mi_pedido")
+  // public String miPedido(Model model, HttpSession session) {
+  // return "tienda/mi_pedido";
+  // }
 
   // Acción de "Reservar ahora" del cliente
   @PostMapping("/guardar")
@@ -106,28 +102,38 @@ public class PedidoController {
     carrito.clear();
 
     return principal != null ? "redirect:/mi-cuenta" : "redirect:/confirmacion-invitado";
-    // // Guardar pedido
-    // Pedido pedidoGuardado = pedidoService.guardar(pedido);
-    // // Convertir carrito a detalles
-    // List<Producto> carrito = carritoService.obtenerCarrito(session);
-    // carrito.forEach(p -> {
-    // DetallePedido det = new DetallePedido();
-    // det.setPedido(pedidoGuardado);
-    // // det.setProductoId(p.getId());
-    // det.setProducto(p);
-    // det.setCantidad(p.getCantidad());
-    // det.setPrecioUnitario(p.getPrecio());
-    // det.setSubtotal(p.getPrecio() * p.getCantidad());
-    // detalleService.guardar(det);
-    // });
-    // // Vaciar carrito
-    // carrito.clear();
+  }
+  // -------------------------
+  // VENDEDOR
+  // -------------------------
 
-    // // Redirigir según si está logueado o no
-    // if (principal != null) {
-    // return "redirect:/mi-cuenta"; // usuario logueado
-    // } else {
-    // return "redirect:/confirmacion-invitado"; // usuario invitado
-    // }
+  // MOSTRAR LISTADO DE RESERVAS
+  @GetMapping("/lista")
+  public String listarPedidos(
+      @RequestParam(required = false) String estado,
+      @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicio,
+      @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFin,
+      Model model) {
+
+    List<Pedido> pedidos = pedidoService.listarConFiltrosEstadoYRangoFecha(estado, fechaInicio, fechaFin);
+
+    model.addAttribute("reservas", pedidos);
+    return "vendedor/lista_pedido";
+  }
+
+  // MOSTRAR DETALLE DE RESERVAS
+  @GetMapping("/detalle/{id}")
+  public String verDetallePedido(@PathVariable Integer id, Model model) {
+    model.addAttribute("pedido", pedidoService.obtenerPorId(id));
+    return "vendedor/lista_pedido_detalle";
+  }
+
+  // CAMBIAR ESTADO DE RESERVAS
+  @PostMapping("/cambiarEstado/{id}")
+  public String cambiarEstado(
+      @PathVariable Integer id,
+      @RequestParam("nuevoEstado") String nuevoEstado) {
+    pedidoService.cambiarEstadoReservaPedido(id, nuevoEstado);
+    return "redirect:/pedido/lista?success=EstadoActualizado";
   }
 }

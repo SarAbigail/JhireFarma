@@ -50,14 +50,6 @@
                     <td th:text="${p.presentacion}"></td>
                     <td th:text="${p.precio}"></td>
                     <td th:text="${p.marca}"></td>
-                    <!-- <td class="text-center">
-                      <a th:href="@{'/admin/productos/editar/' + ${p.id}}"
-                        class="btn btn-sm btn-outline-secondary mb-1">Editar</a>
-                      <form th:action="@{'/admin/productos/eliminar/' + ${p.id}}" method="post" style="display:inline">
-                        <button class="btn btn-sm btn-danger"
-                          onclick="return confirm('¿Eliminar producto?')">Eliminar</button>
-                      </form>
-                    </td> -->
                     <td th:text="${p.stock}"></td>
                     <!-- ACCIONES -->
                     <td class="text-center">

@@ -33,18 +33,20 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th>Producto ID</th>
-                <th>Cantidad</th>
-                <th>Precio Unit.</th>
-                <th>Subtotal</th>
+                <th class="text-center">Prod ID</th>
+                <th>Nombre</th>
+                <th class="text-center">Cantidad</th>
+                <th class="text-center">Precio Unit.</th>
+                <th class="text-center">Subtotal</th>
               </tr>
             </thead>
             <tbody>
               <tr th:each="d : ${pedido.detalles}">
-                <td th:text="${d.productoId}"></td>
-                <td th:text="${d.cantidad}"></td>
-                <td th:text="${d.precioUnitario}"></td>
-                <td th:text="${d.subtotal}"></td>
+                <td class="text-center" th:text="${d.producto.id}"></td>
+                <td th:text="${d.producto.nombre}"></td>
+                <td class="text-center" th:text="${d.cantidad}"></td>
+                <td class="text-center" th:text="${d.precioUnitario}"></td>
+                <td class="text-center" th:text="${d.subtotal}"></td>
               </tr>
             </tbody>
           </table>
