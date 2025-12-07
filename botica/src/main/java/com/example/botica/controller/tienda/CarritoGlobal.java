@@ -38,19 +38,6 @@ public class CarritoGlobal {
         .sum();
   }
 
-  // Para probar
-
-  // @ModelAttribute
-  // public void addUserToModel(Model model) {
-  // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-  // if (auth != null && auth.isAuthenticated() &&
-  // !auth.getName().equals("anonymousUser")) {
-  // model.addAttribute("usuarioLogueado", auth.getName());
-  // } else {
-  // model.addAttribute("usuarioLogueado", null);
-  // }
-  // }
   @ModelAttribute
   public void datosUsuarioLogueado(Model model, Authentication auth) {
     if (auth != null) {

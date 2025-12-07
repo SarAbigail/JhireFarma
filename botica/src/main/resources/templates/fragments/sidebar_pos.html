@@ -9,15 +9,21 @@
 
 <!-- Sidebar en pantallas medianas en adelante -->
 <div th:fragment="sidebarMenuDesktop" class="col-md-3 col-lg-2 d-none d-md-block sidebar text-white px-3 py-0">
-  <div class="text-center py-3">
-    <img th:src="@{/img/logo.png}" alt="Logo" width="120">
+  <div class="sticky-top">
+    <div class="text-center py-3">
+      <img th:src="@{/img/logo.png}" alt="Logo" width="120">
+    </div>
+    <div class="text-center my-1 fst-italic">
+      <small>Bienvenid@</small><br>
+      <small th:text="${usuarioLogueado.nombre}"></small>
+    </div>
+    <a th:href=" @{/ventas}" class="d-block text-white mb-2">Ventas</a>
+    <a th:href="@{/pedido/lista}" class="d-block text-white mb-2">Reservas</a>
+    <form th:action="@{/logout}" method="post">
+      <button type="submit" class="btn d-block text-white mb-2 w-100 text-start">Cerrar sesión
+      </button>
+    </form>
   </div>
-  <a th:href="@{/ventas}" class="d-block text-white mb-2">Ventas</a>
-  <a th:href="@{/pedido/lista}" class="d-block text-white mb-2">Reservas</a>
-
-  <form th:action="@{/logout}" method="post">
-    <button type="submit" class="btn d-block text-white mb-2 w-100 text-start">Cerrar sesión</button>
-  </form>
 </div>
 
 <!-- Sidebar offcanvas para móviles -->

@@ -12,6 +12,10 @@
   <div class="text-center py-3">
     <img th:src="@{/img/logo.png}" alt="Logo" width="120">
   </div>
+  <div class="text-center my-1 fst-italic">
+    <small>Bienvenid@</small><br>
+    <small th:text="${usuarioLogueado.nombre}"></small>
+  </div>
   <a th:href="@{/admin/productos}" class="d-block text-white mb-2">Lista de productos</a>
   <a th:href="@{/admin/productos/nuevo}" class="d-block text-white mb-2">Nuevo producto</a>
   <a th:href="@{/parametros}" class="d-block text-white mb-2">Parámetros</a>

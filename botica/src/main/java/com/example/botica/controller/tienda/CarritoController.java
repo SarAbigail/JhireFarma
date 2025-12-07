@@ -1,15 +1,10 @@
 package com.example.botica.controller.tienda;
 
 import com.example.botica.model.Producto;
-import com.example.botica.model.tienda.Carrito;
-import com.example.botica.model.tienda.Usuario;
 import com.example.botica.repository.tienda.UsuarioRepository;
 import com.example.botica.service.ProductoService;
 import com.example.botica.service.tienda.CarritoService;
-
 import jakarta.servlet.http.HttpSession;
-
-import java.security.Principal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,9 +21,6 @@ public class CarritoController {
 
   @Autowired
   private CarritoService carritoService;
-
-  @Autowired
-  private UsuarioRepository usuarioRepository;
 
   @PostMapping("/agregar")
   @ResponseStatus(HttpStatus.NO_CONTENT)

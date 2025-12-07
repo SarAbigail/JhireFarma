@@ -93,6 +93,12 @@
   <div th:replace="fragments/login_modal :: loginModal"></div>
 </body>
 
+
 </html>
 <!-- Para buscador de productos -->
 <script th:src="@{/js/api_productos.js}"></script>
+<!-- Para abrir el modal de login cuando la ruta se dirge a /login -->
+<script th:if="${mostrarModalLogin}">
+  var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+  loginModal.show();
+</script>

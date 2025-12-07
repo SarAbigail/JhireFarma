@@ -25,9 +25,10 @@
       <!-- Contenido principal -->
       <main class="col-md-9 col-lg-10 py-4">
         <div class="container">
-          <div class="card shadow-sm border-0">
+          <div class="card shadow border-0">
             <div class="card-body">
-              <h3 class="card-title mb-4" th:text="${producto.id == null} ? 'Nuevo Producto' : 'Editar Producto'"></h3>
+              <h1 class="card-title mb-4 fw-bold"
+                th:text="${producto.id == null} ? 'Nuevo Producto' : 'Editar Producto'"></h1>
               <form th:action="@{/admin/productos/guardar}" th:object="${producto}" method="post"
                 enctype="multipart/form-data">
                 <input type="hidden" th:field="*{id}" />

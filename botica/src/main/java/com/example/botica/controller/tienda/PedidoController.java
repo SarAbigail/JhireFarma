@@ -56,12 +56,6 @@ public class PedidoController {
     return "tienda/reserva";
   }
 
-  // // VER RESERVA POR USUARIO
-  // @GetMapping("/mi_pedido")
-  // public String miPedido(Model model, HttpSession session) {
-  // return "tienda/mi_pedido";
-  // }
-
   // Acción de "Reservar ahora" del cliente
   @PostMapping("/guardar")
   public String guardarPedido(@ModelAttribute Pedido pedido, HttpSession session, Principal principal) {

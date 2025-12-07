@@ -3,16 +3,26 @@ package com.example.botica.controller;
 import org.springframework.security.core.Authentication;
 
 import org.springframework.stereotype.Controller;
+import com.example.botica.service.ProductoService;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
+  private final ProductoService productoService;
+
+  public LoginController(ProductoService productoService) {
+    this.productoService = productoService;
+  }
 
   @GetMapping("/login")
-  public String login() {
-    return "login";
+  public String login(Model model) {
+    model.addAttribute("mostrarModalLogin", true);
+    model.addAttribute("productosMasBuscados", productoService.obtenerProductosMasBuscados());
+    model.addAttribute("cantidadProductos", 0);
+    return "/tienda/inicio";
   }
 
   @GetMapping("/logout")

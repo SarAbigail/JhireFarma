@@ -28,10 +28,4 @@ public class VentaController {
     model.addAttribute("productos", productos);
     return "vendedor/ventas";
   }
-
-  // @GetMapping("/vendedor/reservas")
-  // public String reservas(Model model) {
-
-  // return "vendedor/reservas";
-  // }
 }

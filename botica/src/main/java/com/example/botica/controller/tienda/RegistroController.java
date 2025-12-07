@@ -22,22 +22,26 @@ public class RegistroController {
     return "tienda/registro"; // Thymeleaf
   }
 
-  // @PostMapping("/registro")
-  // public String procesarRegistro(@ModelAttribute Usuario usuario) {
-  // // Guardamos usuario tal cual (texto plano)
-  // usuarioService.save(usuario);
-  // return "redirect:/login?registrado";
-  // }
-
   @PostMapping("/registro")
   public String procesarRegistro(@ModelAttribute Usuario usuario) {
-    usuario.setRol("CLIENTE");
+    String email = usuario.getEmail().toLowerCase();
+
+    // Asignar rol según dominio
+    if (email.endsWith("@jhirefarmav.com")) {
+      usuario.setRol("VENDEDOR");
+
+    } else if (email.endsWith("@jhirefarmaa.com")) {
+      usuario.setRol("ADMIN");
+
+    } else {
+      usuario.setRol("CLIENTE");
+    }
+
+    // usuario.setRol("CLIENTE");
     // Guardar usuario
     usuarioService.save(usuario);
-
     // Auto login
     usuarioService.autoLogin(usuario);
-
     // Redirigir a la tienda
     return "redirect:/";
   }

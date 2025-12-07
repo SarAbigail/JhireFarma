@@ -21,11 +21,11 @@
       <div th:replace="fragments/sidebar_admin::sidebarMenuMobile"></div>
       <main class="col-md-9 col-lg-10 py-4">
         <div class="container">
-          <div class="card shadow-sm border-0">
+          <div class="card shadow border-0">
             <div class="card-body">
-              <h3 class="card-title mb-4">
+              <h1 class="card-title mb-4 fw-bold">
                 Ver Producto
-              </h3>
+              </h1>
               <hr>
               <div class="text-center mb-4">
                 <img th:if="${producto.imagen}" th:src="@{'' + ${producto.imagen}}" class="img-fluid rounded shadow-sm"
