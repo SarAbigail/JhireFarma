@@ -23,6 +23,11 @@ public class ProductoController {
     if (producto == null) {
       return "redirect:/busqueda";
     }
+    if (producto != null) {
+      // Aumentar visitas
+      producto.setVisitas(producto.getVisitas() + 1);
+      productoService.guardarProducto(producto);
+    }
     model.addAttribute("producto", producto);
     return "/tienda/producto";
   }

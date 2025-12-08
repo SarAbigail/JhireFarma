@@ -7,6 +7,7 @@ import com.example.botica.service.tienda.CarritoService;
 
 import jakarta.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,7 +18,9 @@ import java.util.List;
 @ControllerAdvice
 public class CarritoGlobal {
 
+  @Autowired
   private final CarritoService carritoService;
+  @Autowired
   private final UsuarioService usuarioService;
 
   public CarritoGlobal(CarritoService carritoService, UsuarioService usuarioService) {

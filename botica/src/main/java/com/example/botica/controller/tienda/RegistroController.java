@@ -41,7 +41,7 @@ public class RegistroController {
     // Guardar usuario
     usuarioService.save(usuario);
     // Auto login
-    usuarioService.autoLogin(usuario);
+    // usuarioService.autoLogin(usuario);
     // Redirigir a la tienda
     return "redirect:/";
   }

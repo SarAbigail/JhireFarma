@@ -12,15 +12,26 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UsuarioService implements UserDetailsService {
+
   @Autowired
   private final UsuarioRepository usuarioRepository;
+  @Autowired
+  private final PasswordEncoder passwordEncoder;
+
+  public UsuarioService(UsuarioRepository usuarioRepository,
+      PasswordEncoder passwordEncoder) {
+    this.usuarioRepository = usuarioRepository;
+    this.passwordEncoder = passwordEncoder;
+  }
 
   // Por probar
   public Usuario save(Usuario usuario) {
+    usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
     return usuarioRepository.save(usuario);
   }
 
@@ -29,19 +40,20 @@ public class UsuarioService implements UserDetailsService {
         .orElse(null);
   }
 
-  public void autoLogin(Usuario usuario) {
-    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-        usuario.getEmail(),
-        usuario.getPassword(),
-        List.of(new SimpleGrantedAuthority("ROLE_" + usuario.getRol())));
+  // public void autoLogin(Usuario usuario) {
+  // UsernamePasswordAuthenticationToken authToken = new
+  // UsernamePasswordAuthenticationToken(
+  // usuario.getEmail(),
+  // usuario.getPassword(),
+  // List.of(new SimpleGrantedAuthority("ROLE_" + usuario.getRol())));
 
-    SecurityContextHolder.getContext().setAuthentication(authToken);
-  }
+  // SecurityContextHolder.getContext().setAuthentication(authToken);
+  // }
 
   // Todo estoy sí funciona, incluso lo comentado
-  public UsuarioService(UsuarioRepository usuarioRepository) {
-    this.usuarioRepository = usuarioRepository;
-  }
+  // public UsuarioService(UsuarioRepository usuarioRepository) {
+  // this.usuarioRepository = usuarioRepository;
+  // }
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

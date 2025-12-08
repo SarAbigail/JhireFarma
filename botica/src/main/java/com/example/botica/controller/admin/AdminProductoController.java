@@ -36,8 +36,6 @@ public class AdminProductoController {
   private CategoriaRepository categoriaRepository;
   @Autowired
   private PresentacionRepository presentacionRepository;
-  @Autowired
-  private ProductoRepository productoRepository;
 
   // Listar productos
   @GetMapping("/productos")

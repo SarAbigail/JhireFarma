@@ -1,26 +1,38 @@
 package com.example.botica.security;
 
 import com.example.botica.service.UsuarioService;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
   private final UsuarioService usuarioService;
+  private final PasswordEncoder passwordEncoder;
 
-  public SecurityConfig(UsuarioService usuarioService) {
+  public SecurityConfig(UsuarioService usuarioService, PasswordEncoder passwordEncoder) {
     this.usuarioService = usuarioService;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  public DaoAuthenticationProvider authProvider() {
+    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+    authProvider.setUserDetailsService(usuarioService);
+    authProvider.setPasswordEncoder(passwordEncoder);
+    return authProvider;
+  }
+
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
@@ -42,21 +54,7 @@ public class SecurityConfig {
             .logoutUrl("/logout")
             .logoutSuccessUrl("/")
             .permitAll());
+
     return http.build();
   }
-
-  @Bean
-  public DaoAuthenticationProvider authProvider() {
-    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-    authProvider.setUserDetailsService(usuarioService);
-    // authProvider.setPasswordEncoder(new BCryptPasswordEncoder());
-    authProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
-    return authProvider;
-  }
-
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return NoOpPasswordEncoder.getInstance(); // contraseña en texto plano
-  }
-
 }
