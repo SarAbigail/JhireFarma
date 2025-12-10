@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Mantenimientos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parámetros</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -24,9 +25,9 @@
         <div class="container">
           <div class="card shadow border-0">
             <div class="card-body">
-              <h1 class="card-title mb-4 fw-bold">Parámetros</h1>
+              <h1 class="card-title mb-4 fw-bold text-center text-md-start">Parámetros</h1>
               <!-- Tabs -->
-              <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <ul class="nav nav-tabs flex-wrap" id="myTab" role="tablist">
                 <!-- <li class="nav-item" role="presentation">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#categoria" type="button"
                     th:classappend="${tabActiva.equals('categoria')} ? ' active' : ''"
@@ -51,18 +52,17 @@
               </ul>
 
               <div class="tab-content mt-3">
-
                 <!-- Categoría -->
                 <div id="categoria"
                   th:class="${tabActiva.equals('categoria')} ? 'tab-pane fade show active' : 'tab-pane fade'">
                   <form th:action="@{/parametros/categoria/guardar}" method="post" class="row g-3">
                     <input type="hidden" name="id" th:value="${formCategoria != null} ? ${formCategoria.id} : ''">
-                    <div class="col-md-7">
+                    <div class="col-12 col-md-7">
                       <label class="form-label">Nombre</label>
                       <input type="text" name="nombre" class="form-control"
                         th:value="${formCategoria != null} ? ${formCategoria.nombre} : ''" required />
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-6 col-md-3">
                       <div class="col-md-12">
                         <label class="form-label">Estado</label>
                       </div>
@@ -73,43 +73,46 @@
                           th:text="${formCategoria != null} ? 'Activo' : 'Inactivo'"></label>
                       </div>
                     </div>
-                    <div class="col-md-2 text-center align-content-center">
+                    <div class="col-6 col-md-2 text-center align-content-center">
                       <button class="btn btn-secondary" th:text="${esEdicion} ? 'Actualizar' : 'Guardar'">
                         Guardar
                       </button>
                     </div>
                   </form>
                   <h4 class="mt-4">Listado de categorías</h4>
-                  <table class="table table-bordered mt-3">
-                    <thead>
-                      <tr>
-                        <th class="text-center">ID</th>
-                        <th>Nombre</th>
-                        <th class="text-center">Estado</th>
-                        <th style="width:130px;" class="text-center">Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr th:each="c : ${categoria}">
-                        <td th:text="${c.id}" class="text-center"></td>
-                        <td th:text="${c.nombre}"></td>
-                        <!-- Indicador de Activo -->
-                        <td class="text-center">
-                          <span th:if="${c.estado}" class="badge bg-success">Visible</span>
-                          <span th:if="${!c.estado}" class="badge bg-danger">No visible</span>
-                        </td>
-                        <!-- Acciones -->
-                        <td class="text-center">
-                          <a th:href="@{/parametros(tab='categoria',id=${c.id})}" class="btn btn-sm btn-primary">
-                            <i class="bi bi-pencil-square"></i>
-                          </a>
-                          <a th:href="@{'/parametros/categoria/toggle/' + ${c.id}}" class="btn btn-sm btn-warning ms-1">
-                            <i class="bi" th:classappend="${c.estado} ? 'bi-toggle-on' : 'bi-toggle-off'"></i>
-                          </a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div class="table-responsive mt-3">
+                    <table class="table table-bordered mt-3">
+                      <thead>
+                        <tr>
+                          <th class="text-center">ID</th>
+                          <th>Nombre</th>
+                          <th class="text-center">Estado</th>
+                          <th style="width:130px;" class="text-center">Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="c : ${categoria}">
+                          <td th:text="${c.id}" class="text-center"></td>
+                          <td th:text="${c.nombre}"></td>
+                          <!-- Indicador de Activo -->
+                          <td class="text-center">
+                            <span th:if="${c.estado}" class="badge bg-success">Visible</span>
+                            <span th:if="${!c.estado}" class="badge bg-danger">No visible</span>
+                          </td>
+                          <!-- Acciones -->
+                          <td class="text-center">
+                            <a th:href="@{/parametros(tab='categoria',id=${c.id})}" class="btn btn-sm btn-primary">
+                              <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a th:href="@{'/parametros/categoria/toggle/' + ${c.id}}"
+                              class="btn btn-sm btn-warning ms-1">
+                              <i class="bi" th:classappend="${c.estado} ? 'bi-toggle-on' : 'bi-toggle-off'"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
 
                 <!-- Marca -->
@@ -117,13 +120,13 @@
                   <form th:action="@{/parametros/marca/guardar}" method="post" class="row g-3">
                     <input type="hidden" name="id" th:value="${formMarca != null} ? ${formMarca.id} : ''">
                     <!-- campo nombre -->
-                    <div class="col-md-7">
+                    <div class="col-12 col-md-7">
                       <label class="form-label">Nombre</label>
                       <input type="text" name="nombre" class="form-control"
                         th:value="${formMarca != null} ? ${formMarca.nombre} : ''" required />
                     </div>
                     <!-- campo pais origen -->
-                    <div class="col-md-2">
+                    <div class="col-12 col-md-2">
                       <label class="form-label">País de origen</label>
                       <!-- <div th:replace="fragments/select_paises :: selectPaises('paisOrigen')"></div> -->
                       <div
@@ -131,7 +134,7 @@
                       </div>
                     </div>
                     <!-- campo estado -->
-                    <div class="col-md-1">
+                    <div class="col-6 col-md-1">
                       <div class="col-md-12">
                         <label class="form-label">Estado</label>
                       </div>
@@ -144,42 +147,45 @@
                       </div>
                     </div>
                     <!-- campo guardar -->
-                    <div class="col-md-2 text-center align-content-center">
+                    <div class="col-6 col-md-2 text-center align-content-center">
                       <button class="btn btn-secondary"
                         th:text="${esEdicion} ? 'Actualizar' : 'Guardar'">Guardar</button>
                     </div>
                   </form>
                   <h4 class="mt-4">Listado de marcas</h4>
-                  <table class="table table-bordered mt-3">
-                    <thead>
-                      <tr>
-                        <th class="text-center">ID</th>
-                        <th>Nombre</th>
-                        <th class="text-center">País de origen</th>
-                        <th class="text-center">Estado</th>
-                        <th style="width:130px;" class="text-center">Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr th:each="m : ${marca}">
-                        <td th:text="${m.id}" class="text-center"></td>
-                        <td th:text="${m.nombre}"></td>
-                        <td th:text="${m.paisOrigen}" class="text-center"></td>
-                        <td class="text-center">
-                          <span th:if="${m.estado}" class="badge bg-success">Visible</span>
-                          <span th:if="${!m.estado}" class="badge bg-danger">No Visible</span>
-                        </td>
-                        <td class="text-center">
-                          <a th:href="@{/parametros?(tab='marca',id=${m.id})}" class="btn btn-sm btn-primary">
-                            <i class="bi bi-pencil-square"></i>
-                          </a>
-                          <a th:href="@{'/parametros/marca/toggle/' + ${m.id}}" class="btn btn-sm btn-warning ms-1">
-                            <i class="bi" th:classappend="${m.estado} ? 'bi-toggle-on' : 'bi-toggle-off'"></i>
-                          </a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div class="table-responsive mt-3">
+
+                    <table class="table table-bordered mt-3">
+                      <thead>
+                        <tr>
+                          <th class="text-center">ID</th>
+                          <th>Nombre</th>
+                          <th class="text-center">País de origen</th>
+                          <th class="text-center">Estado</th>
+                          <th style="width:130px;" class="text-center">Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="m : ${marca}">
+                          <td th:text="${m.id}" class="text-center"></td>
+                          <td th:text="${m.nombre}"></td>
+                          <td th:text="${m.paisOrigen}" class="text-center"></td>
+                          <td class="text-center">
+                            <span th:if="${m.estado}" class="badge bg-success">Visible</span>
+                            <span th:if="${!m.estado}" class="badge bg-danger">No Visible</span>
+                          </td>
+                          <td class="text-center">
+                            <a th:href="@{/parametros?(tab='marca',id=${m.id})}" class="btn btn-sm btn-primary">
+                              <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a th:href="@{'/parametros/marca/toggle/' + ${m.id}}" class="btn btn-sm btn-warning ms-1">
+                              <i class="bi" th:classappend="${m.estado} ? 'bi-toggle-on' : 'bi-toggle-off'"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
 
                 <!-- Síntoma -->
@@ -188,13 +194,13 @@
                   <form th:action="@{/parametros/sintoma/guardar}" method="post" class="row g-3">
                     <input type="hidden" name="id" th:value="${formSintoma != null} ? ${formSintoma.id} : ''">
                     <!-- campo nombre -->
-                    <div class="col-md-7">
+                    <div class="col-12 col-md-7">
                       <label class="form-label">Nombre</label>
                       <input type="text" name="nombre" class="form-control"
                         th:value="${formSintoma != null} ? ${formSintoma.nombre} : ''" required />
                     </div>
                     <!-- campo estado -->
-                    <div class="col-md-3">
+                    <div class="col-6 col-md-3">
                       <div class="col-md-12">
                         <label class="form-label">Estado</label>
                       </div>
@@ -207,40 +213,42 @@
                       </div>
                     </div>
                     <!-- botón guardar -->
-                    <div class="col-md-2 text-center align-content-center">
+                    <div class="col-6 col-md-2 text-center align-content-center">
                       <button class="btn btn-secondary"
                         th:text="${esEdicion} ? 'Actualizar' : 'Guardar'">Guardar</button>
                     </div>
                   </form>
                   <h4 class="mt-4">Listado de síntomas</h4>
-                  <table class="table table-bordered mt-3">
-                    <thead>
-                      <tr>
-                        <th class="text-center">ID</th>
-                        <th>Nombre</th>
-                        <th class="text-center">Estado</th>
-                        <th style="width:130px;" class="text-center">Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr th:each="s : ${sintoma}">
-                        <td th:text="${s.id}" class="text-center"></td>
-                        <td th:text="${s.nombre}"></td>
-                        <td class="text-center">
-                          <span th:if="${s.estado}" class="badge bg-success">Visible</span>
-                          <span th:if="${!s.estado}" class="badge bg-danger">No Visible</span>
-                        </td>
-                        <td class="text-center">
-                          <a th:href="@{/parametros?(tab='sintoma',id=${s.id})}" class="btn btn-sm btn-primary">
-                            <i class="bi bi-pencil-square"></i>
-                          </a>
-                          <a th:href="@{'/parametros/sintoma/toggle/' + ${s.id}}" class="btn btn-sm btn-warning ms-1">
-                            <i class="bi" th:classappend="${s.estado} ? 'bi-toggle-on' : 'bi-toggle-off'"></i>
-                          </a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div class="table-responsive mt-3">
+                    <table class="table table-bordered mt-3">
+                      <thead>
+                        <tr>
+                          <th class="text-center">ID</th>
+                          <th>Nombre</th>
+                          <th class="text-center">Estado</th>
+                          <th style="width:130px;" class="text-center">Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="s : ${sintoma}">
+                          <td th:text="${s.id}" class="text-center"></td>
+                          <td th:text="${s.nombre}"></td>
+                          <td class="text-center">
+                            <span th:if="${s.estado}" class="badge bg-success">Visible</span>
+                            <span th:if="${!s.estado}" class="badge bg-danger">No Visible</span>
+                          </td>
+                          <td class="text-center">
+                            <a th:href="@{/parametros?(tab='sintoma',id=${s.id})}" class="btn btn-sm btn-primary">
+                              <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a th:href="@{'/parametros/sintoma/toggle/' + ${s.id}}" class="btn btn-sm btn-warning ms-1">
+                              <i class="bi" th:classappend="${s.estado} ? 'bi-toggle-on' : 'bi-toggle-off'"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
 
                 <!-- Presentación -->
@@ -249,13 +257,13 @@
                   <form th:action="@{/parametros/presentacion/guardar}" method="post" class="row g-3">
                     <input type="hidden" name="id" th:value="${formPresentacion != null} ? ${formPresentacion.id} : ''">
                     <!-- campo nombre -->
-                    <div class="col-md-7">
+                    <div class="col-12 col-md-7">
                       <label class="form-label">Nombre</label>
                       <input type="text" name="nombre" class="form-control"
                         th:value="${formPresentacion != null} ? ${formPresentacion.nombre} : ''" required />
                     </div>
                     <!-- campo estado -->
-                    <div class="col-md-3">
+                    <div class="col-6 col-md-3">
                       <div class="col-md-12">
                         <label class="form-label">Estado</label>
                       </div>
@@ -268,42 +276,43 @@
                       </div>
                     </div>
                     <!-- botón guardar -->
-                    <div class="col-md-2 text-center align-content-center">
+                    <div class="col-6 col-md-2 text-center align-content-center">
                       <button class="btn btn-secondary"
                         th:text="${esEdicion} ? 'Actualizar' : 'Guardar'">Guardar</button>
                     </div>
                   </form>
                   <h4 class="mt-4">Listado de presentaciones</h4>
-                  <table class="table table-bordered mt-3">
-                    <thead>
-                      <tr>
-                        <th class="text-center">ID</th>
-                        <th>Nombre</th>
-                        <th class="text-center">Estado</th>
-                        <th style="width:130px;" class="text-center">Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr th:each="p : ${presentacion}">
-                        <td th:text="${p.id}" class="text-center"></td>
-                        <td th:text="${p.nombre}"></td>
-                        <td class="text-center">
-                          <span th:if="${p.estado}" class="badge bg-success">Visible</span>
-                          <span th:if="${!p.estado}" class="badge bg-danger">No Visible</span>
-                        </td>
-                        <td class="text-center">
-                          <a th:href="@{/parametros?(tab='presentacion',id=${p.id})}" class="btn btn-sm btn-primary">
-                            <i class="bi bi-pencil-square"></i>
-                          </a>
-                          <a th:href="@{'/parametros/presentacion/toggle/' + ${p.id}}"
-                            class="btn btn-sm btn-warning ms-1">
-                            <i class="bi" th:classappend="${p.estado} ? 'bi-toggle-on' : 'bi-toggle-off'"></i>
-                          </a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-
+                  <div class="table-responsive mt-3">
+                    <table class="table table-bordered mt-3">
+                      <thead>
+                        <tr>
+                          <th class="text-center">ID</th>
+                          <th>Nombre</th>
+                          <th class="text-center">Estado</th>
+                          <th style="width:130px;" class="text-center">Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="p : ${presentacion}">
+                          <td th:text="${p.id}" class="text-center"></td>
+                          <td th:text="${p.nombre}"></td>
+                          <td class="text-center">
+                            <span th:if="${p.estado}" class="badge bg-success">Visible</span>
+                            <span th:if="${!p.estado}" class="badge bg-danger">No Visible</span>
+                          </td>
+                          <td class="text-center">
+                            <a th:href="@{/parametros?(tab='presentacion',id=${p.id})}" class="btn btn-sm btn-primary">
+                              <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a th:href="@{'/parametros/presentacion/toggle/' + ${p.id}}"
+                              class="btn btn-sm btn-warning ms-1">
+                              <i class="bi" th:classappend="${p.estado} ? 'bi-toggle-on' : 'bi-toggle-off'"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>

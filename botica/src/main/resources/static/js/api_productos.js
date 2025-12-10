@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
               .map(
                 (p) => `
 <a href="/producto/${p.id}" class="text-decoration-none text-reset">
-  <div class="card mb-3 shadow-sm">
+  <div class="card mb-3 shadow-sm p-2">
     <div class="row g-0 align-items-center">
       <div class="col-md-2 text-center">
         <img src="${p.imagen}" class="img-fluid rounded-start p-2" alt="Imagen producto"

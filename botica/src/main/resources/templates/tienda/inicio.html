@@ -30,10 +30,10 @@
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"></button> -->
     </div>
 
-    <div class="carousel-inner">
+    <!-- <div class="carousel-inner">
       <div class="carousel-item active">
-        <img
-          src="https://images.ctfassets.net/l9x8e72nkkav/3oebrtmNsE2X0N9HrBeLoG/e28c3b3ebf4dd2d4834dd933bd35899c/Web_slider_1602x460.png?fm=avif"
+        <img src="https://raw.githubusercontent.com/SarAbigail/md-links/refs/heads/master/img/Web_slider_1602x460.avif"
+          width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Web_slider_1602x460"
           class="d-block w-100 bg-warning" alt="Imagen 1">
       </div>
       <div class="carousel-item">
@@ -41,17 +41,29 @@
           src="https://images.ctfassets.net/l9x8e72nkkav/b9Iit5yvxbBeLjQawdTyn/74255ec10f2e706e1ea7a92cb6117a75/Nivea-belleza-inkafarma-slider-x1-web.jpg?fm=avif"
           class="d-block w-100 bg-success" alt="Imagen 2">
       </div>
-      <!-- <div class="carousel-item">
-        <img th:src="@{/img/slider3.jpg}" class="d-block w-100 bg-info" alt="Imagen 3">
+    </div> -->
+    <div class="carousel-inner">
+      <!-- SLIDE 1 -->
+      <div class="carousel-item active">
+        <!-- Imagen para CELULAR -->
+        <img
+          src="https://raw.githubusercontent.com/SarAbigail/md-links/refs/heads/master/img/Slider%20cellskin%20sm.avif"
+          class="d-block w-100 d-block d-md-none" alt="Imagen 1 móvil">
+        <!-- Imagen para TABLET+ -->
+        <img src="https://raw.githubusercontent.com/SarAbigail/md-links/refs/heads/master/img/Slider%20cellskin.avif"
+          class="d-block w-100 d-none d-md-block" alt="Imagen 1 desktop">
       </div>
+      <!-- SLIDE 2 -->
       <div class="carousel-item">
-        <img th:src="@{/img/slider4.jpg}" class="d-block w-100 bg-primary " alt="Imagen 4">
-      </div>
-      <div class="carousel-item">
-        <img th:src="@{/img/slider5.jpg}" class="d-block w-100 bg-dark" alt="Imagen 5">
-      </div> -->
-    </div>
+        <!-- Imagen para CELULAR -->
+        <img src="https://raw.githubusercontent.com/SarAbigail/md-links/refs/heads/master/img/Slider%20nivea%20sm.png"
+          class="d-block w-100 d-block d-md-none" alt="Imagen 2 móvil">
 
+        <!-- Imagen para TABLET+ -->
+        <img src="https://raw.githubusercontent.com/SarAbigail/md-links/refs/heads/master/img/Slider%20nivea.avif"
+          class="d-block w-100 d-none d-md-block" alt="Imagen 2 desktop">
+      </div>
+    </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
       data-bs-slide="prev">
       <span class="carousel-control-prev-icon"></span>
@@ -63,10 +75,20 @@
   </div>
 
   <!-- SECCIÓN LO MÁS BUSCADO -->
+  <!-- <section class="container my-5">
+    <h2 class="text-center mb-4 fw-bold">Lo más buscado</h2>
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+      <div class="col" th:each="producto : ${productosMasBuscados}">
+        <div th:replace="fragments/tienda/card_producto :: card_producto"></div>
+      </div>
+    </div>
+  </section> -->
+
+
   <section class="container my-5">
     <h2 class="text-center mb-4 fw-bold">Lo más buscado</h2>
 
-    <div class="row row-cols-1 row-cols-md-5 g-4">
+    <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
       <!-- Card generado dinámicamente -->
       <div class="col" th:each="producto : ${productosMasBuscados}">
         <div th:replace="fragments/tienda/card_producto :: card_producto"></div>
@@ -91,6 +113,7 @@
   <div th:replace="fragments/tienda/carrito_scripts :: carritoScripts"></div>
   <!-- Modal de login -->
   <div th:replace="fragments/login_modal :: loginModal"></div>
+
 </body>
 
 

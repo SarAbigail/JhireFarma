@@ -24,11 +24,13 @@
       <main class="col-md-9 col-lg-10 py-4">
         <div class="container">
           <div class="card shadow border-0 px-3">
-            <div class="card-body d-flex justify-content-between align-items-center px-0">
-              <h1 class="mb-0 fw-bold">Productos</h1>
-              <a th:href="@{/admin/productos/nuevo}" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> Nuevo Producto
-              </a>
+            <div class="card-body d-flex px-0">
+              <div class="row col-12 align-items-center ps-2">
+                <h1 class="col-12 col-md-6 col-lg-10 mb-2 fw-bold ps-0">Productos</h1>
+                <a th:href="@{/admin/productos/nuevo}" class="btn btn-primary col-12 col-md-6 col-lg-2">
+                  <i class="bi bi-plus-circle"></i> Nuevo Producto
+                </a>
+              </div>
             </div>
             <div class="table-responsive mt-3">
               <table class="table table-hover align-middle">
