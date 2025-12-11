@@ -46,7 +46,7 @@ public class CategoriaController {
     model.addAttribute("maxSel", max);
     model.addAttribute("ordenSel", orden);
 
-    return "/tienda/categoria";
+    return "tienda/categoria";
   }
 
 }

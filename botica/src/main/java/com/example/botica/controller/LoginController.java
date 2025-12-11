@@ -22,7 +22,7 @@ public class LoginController {
     model.addAttribute("mostrarModalLogin", true);
     model.addAttribute("productosMasBuscados", productoService.obtenerProductosMasBuscados());
     model.addAttribute("cantidadProductos", 0);
-    return "/tienda/inicio";
+    return "tienda/inicio";
   }
 
   @GetMapping("/logout")

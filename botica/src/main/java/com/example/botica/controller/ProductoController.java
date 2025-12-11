@@ -29,7 +29,7 @@ public class ProductoController {
       productoService.guardarProducto(producto);
     }
     model.addAttribute("producto", producto);
-    return "/tienda/producto";
+    return "tienda/producto";
   }
 
   // ------------------------------------------

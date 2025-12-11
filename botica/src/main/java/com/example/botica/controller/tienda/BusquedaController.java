@@ -51,6 +51,6 @@ public class BusquedaController {
     model.addAttribute("minSel", min);
     model.addAttribute("maxSel", max);
     model.addAttribute("ordenSel", orden);
-    return "/tienda/busqueda";
+    return "tienda/busqueda";
   }
 }

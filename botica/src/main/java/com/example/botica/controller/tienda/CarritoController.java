@@ -60,7 +60,7 @@ public class CarritoController {
     List<Producto> carrito = carritoService.obtenerCarrito(session);
     model.addAttribute("carrito", carrito);
     model.addAttribute("total", carritoService.calcularTotal(session));
-    return "/tienda/carrito";
+    return "tienda/carrito";
   }
 
   @PostMapping("/aumentar")
