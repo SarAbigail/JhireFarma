@@ -21,61 +21,104 @@ public class ParametrosController {
   @Autowired
   private SintomaService sintomaService;
 
+  // @GetMapping
+  // public String parametros(
+  // Model model,
+  // @RequestParam(value = "tab", defaultValue = "categoria") String tabActiva,
+  // @RequestParam(value = "id", required = false) Integer id) {
+
+  // model.addAttribute("categoria", categoriaService.listar());
+  // model.addAttribute("marca", marcaService.listar());
+  // model.addAttribute("presentacion", presentacionService.listar());
+  // model.addAttribute("sintoma", sintomaService.listar());
+
+  // // objeto para el form
+  // if (tabActiva.equals("categoria")) {
+  // if (id != null) {
+  // model.addAttribute("formCategoria", categoriaService.buscarPorId(id));
+  // model.addAttribute("esEdicion", true);
+  // } else {
+  // model.addAttribute("formCategoria", new Categoria());
+  // model.addAttribute("esEdicion", false);
+  // }
+  // }
+
+  // if (tabActiva.equals("marca")) {
+  // if (id != null) {
+  // model.addAttribute("formMarca", marcaService.buscarPorId(id));
+  // model.addAttribute("esEdicion", true);
+
+  // } else {
+  // model.addAttribute("formMarca", new Marca());
+  // model.addAttribute("esEdicion", false);
+  // }
+  // }
+
+  // if (tabActiva.equals("sintoma")) {
+  // if (id != null) {
+  // model.addAttribute("formSintoma", sintomaService.buscarPorId(id));
+  // model.addAttribute("esEdicion", true);
+  // } else {
+  // model.addAttribute("formSintoma", new Sintoma());
+  // model.addAttribute("esEdicion", false);
+  // }
+  // }
+
+  // if (tabActiva.equals("presentacion")) {
+  // if (id != null) {
+  // model.addAttribute("formPresentacion", presentacionService.buscarPorId(id));
+  // model.addAttribute("esEdicion", true);
+  // } else {
+  // model.addAttribute("formPresentacion", new Presentacion());
+  // model.addAttribute("esEdicion", false);
+  // }
+  // }
+
+  // model.addAttribute("tabActiva", tabActiva);
+
+  // return "/admin/parametros";
+  // }
+
   @GetMapping
   public String parametros(
       Model model,
       @RequestParam(value = "tab", defaultValue = "categoria") String tabActiva,
       @RequestParam(value = "id", required = false) Integer id) {
 
+    // Listas
     model.addAttribute("categoria", categoriaService.listar());
     model.addAttribute("marca", marcaService.listar());
     model.addAttribute("presentacion", presentacionService.listar());
     model.addAttribute("sintoma", sintomaService.listar());
 
-    // objeto para el form
-    if (tabActiva.equals("categoria")) {
-      if (id != null) {
-        model.addAttribute("formCategoria", categoriaService.buscarPorId(id));
-        model.addAttribute("esEdicion", true);
-      } else {
-        model.addAttribute("formCategoria", new Categoria());
-        model.addAttribute("esEdicion", false);
-      }
-    }
+    // SIEMPRE inicializar todos los objetos de formulario
+    model.addAttribute("formCategoria", new Categoria());
+    model.addAttribute("formMarca", new Marca());
+    model.addAttribute("formSintoma", new Sintoma());
+    model.addAttribute("formPresentacion", new Presentacion());
+    model.addAttribute("esEdicion", false);
 
-    if (tabActiva.equals("marca")) {
-      if (id != null) {
-        model.addAttribute("formMarca", marcaService.buscarPorId(id));
-        model.addAttribute("esEdicion", true);
+    // Sobrescribir solo el que se está editando
+    if (id != null) {
+      model.addAttribute("esEdicion", true);
 
-      } else {
-        model.addAttribute("formMarca", new Marca());
-        model.addAttribute("esEdicion", false);
-      }
-    }
-
-    if (tabActiva.equals("sintoma")) {
-      if (id != null) {
-        model.addAttribute("formSintoma", sintomaService.buscarPorId(id));
-        model.addAttribute("esEdicion", true);
-      } else {
-        model.addAttribute("formSintoma", new Sintoma());
-        model.addAttribute("esEdicion", false);
-      }
-    }
-
-    if (tabActiva.equals("presentacion")) {
-      if (id != null) {
-        model.addAttribute("formPresentacion", presentacionService.buscarPorId(id));
-        model.addAttribute("esEdicion", true);
-      } else {
-        model.addAttribute("formPresentacion", new Presentacion());
-        model.addAttribute("esEdicion", false);
+      switch (tabActiva) {
+        case "categoria":
+          model.addAttribute("formCategoria", categoriaService.buscarPorId(id));
+          break;
+        case "marca":
+          model.addAttribute("formMarca", marcaService.buscarPorId(id));
+          break;
+        case "sintoma":
+          model.addAttribute("formSintoma", sintomaService.buscarPorId(id));
+          break;
+        case "presentacion":
+          model.addAttribute("formPresentacion", presentacionService.buscarPorId(id));
+          break;
       }
     }
 
     model.addAttribute("tabActiva", tabActiva);
-
     return "/admin/parametros";
   }
 
