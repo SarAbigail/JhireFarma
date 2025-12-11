@@ -2,6 +2,7 @@ package com.example.botica.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -98,19 +99,42 @@ public class AdminProductoController {
   }
 
   // Editar producto
+  // @GetMapping("/productos/editar/{id}")
+  // public String editarProducto(@PathVariable Integer id, Model model) {
+  // Producto producto = productoService.buscarPorId(id);
+  // if (producto == null) {
+  // // Si no existe, redirige al listado con mensaje de error
+  // return "redirect:/admin/productos?error=notfound";
+  // }
+  // model.addAttribute("producto", producto);
+  // model.addAttribute("sintomas", sintomaService.listar());
+  // model.addAttribute("marcas", marcaRepository.findAll());
+  // model.addAttribute("categorias", categoriaRepository.findAll());
+  // model.addAttribute("presentaciones", presentacionRepository.findAll());
+  // return "/admin/producto_form";
+  // }
   @GetMapping("/productos/editar/{id}")
+  @Transactional(readOnly = true)
   public String editarProducto(@PathVariable Integer id, Model model) {
-    Producto producto = productoService.buscarPorId(id);
-    if (producto == null) {
-      // Si no existe, redirige al listado con mensaje de error
-      return "redirect:/admin/productos?error=notfound";
+    try {
+      Producto producto = productoService.buscarPorId(id);
+      if (producto == null) {
+        return "redirect:/admin/productos?error=notfound";
+      }
+
+      model.addAttribute("producto", producto);
+      model.addAttribute("sintomas", sintomaService.listar());
+      model.addAttribute("marcas", marcaRepository.findAll());
+      model.addAttribute("categorias", categoriaRepository.findAll());
+      model.addAttribute("presentaciones", presentacionRepository.findAll());
+
+      return "admin/producto_form"; // Sin / inicial
+    } catch (Exception e) {
+      // Log del error para diagnóstico
+      System.err.println("Error editando producto: " + e.getMessage());
+      e.printStackTrace();
+      return "redirect:/admin/productos?error=servererror";
     }
-    model.addAttribute("producto", producto);
-    model.addAttribute("sintomas", sintomaService.listar());
-    model.addAttribute("marcas", marcaRepository.findAll());
-    model.addAttribute("categorias", categoriaRepository.findAll());
-    model.addAttribute("presentaciones", presentacionRepository.findAll());
-    return "/admin/producto_form";
   }
 
   // Eliminar producto
