@@ -6,7 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.botica.model.Producto;
+import com.example.botica.model.tienda.DetallePedido;
 import com.example.botica.model.tienda.Pedido;
+import com.example.botica.repository.ProductoRepository;
 import com.example.botica.repository.tienda.PedidoRepository;
 
 @Service
@@ -14,6 +17,9 @@ public class PedidoService {
 
   @Autowired
   private PedidoRepository pedidoRepository;
+
+  @Autowired
+  private ProductoRepository productoRepository;
 
   // Guardar pedidos
   public Pedido guardar(Pedido pedido) {
@@ -35,12 +41,28 @@ public class PedidoService {
     return pedidoRepository.buscarConFiltrosEstadoYRangoFecha(estado, fechaInicio, fechaFin);
   }
 
-  // Cambiar el estado del pedido
+  // // Cambiar el estado del pedido
   public void cambiarEstadoReservaPedido(Integer id, String nuevoEstado) {
     Pedido p = obtenerPorId(id);
-    if (p != null) {
-      p.setEstado(nuevoEstado);
-      pedidoRepository.save(p);
+    if (p == null)
+      return;
+    // Si el nuevo estado requiere descontar stock
+    if ("ENTREGADO".equalsIgnoreCase(nuevoEstado)) {
+      for (DetallePedido detalle : p.getDetalles()) {
+        Producto producto = detalle.getProducto();
+
+        if (producto != null) {
+          int cantidad = detalle.getCantidad(); // si quieres restar 1, reemplázalo por 1
+          producto.setStock(producto.getStock() - cantidad);
+
+          productoRepository.save(producto);
+        }
+      }
     }
+
+    // Cambiar estado
+    p.setEstado(nuevoEstado);
+    pedidoRepository.save(p);
   }
+
 }

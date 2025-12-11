@@ -57,6 +57,12 @@ public class VentaService {
       Producto producto = productoRepository.findById(d.getProducto().getId()).orElse(null);
       if (producto == null)
         continue;
+      // Disminuir stock
+      int cantidadVendida = d.getCantidad();
+      producto.setStock(producto.getStock() - cantidadVendida);
+      // Guardar producto
+      productoRepository.save(producto);
+
       VentaDetalle detalle = new VentaDetalle();
       detalle.setVenta(venta);
       detalle.setProducto(producto);
