@@ -42,13 +42,12 @@
                     <label class="form-label">Presentación</label>
                     <select name="presentacionId" class="form-control" required>
                       <option value="">Seleccione</option>
-                      <!-- <option th:each="p : ${presentaciones}" th:value="${p.id}" th:text="${p.nombre}"
-                        th:selected="${producto.presentacionId != null} ? ${p.id} == ${producto.presentacionId.id} : false">
-                      </option> -->
                       <option th:each="p : ${presentaciones}" th:value="${p.id}" th:text="${p.nombre}"
+                        th:selected="${producto.presentacionId != null} ? ${p.id} == ${producto.presentacionId.id} : false">
+                      </option>
+                      <!-- <option th:each="p : ${presentaciones}" th:value="${p.id}" th:text="${p.nombre}"
                         th:selected="${producto.presentacion?.id == p.id}">
-                      </option>
-                      </option>
+                      </option> -->
                     </select>
                   </div>
                 </div>
@@ -62,24 +61,24 @@
                     <label class="form-label">Marca</label>
                     <select name="marcaId" class="form-control" required>
                       <option value="">Seleccione</option>
-                      <!-- <option th:each="m : ${marcas}" th:value="${m.id}" th:text="${m.nombre}"
-                        th:selected="${producto.marcaId != null and m.id == producto.marcaId.id}">
-                      </option> -->
                       <option th:each="m : ${marcas}" th:value="${m.id}" th:text="${m.nombre}"
-                        th:selected="${producto.marca?.id == m.id}">
+                        th:selected="${producto.marcaId != null and m.id == producto.marcaId.id}">
                       </option>
+                      <!-- <option th:each="m : ${marcas}" th:value="${m.id}" th:text="${m.nombre}"
+                        th:selected="${producto.marca?.id == m.id}">
+                      </option> -->
                     </select>
                   </div>
                   <div class="col-md-4">
                     <label class="form-label">Categoría</label>
                     <select name="categoriaId" class="form-control" required>
                       <option value="">Seleccione</option>
-                      <!-- <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nombre}"
-                        th:selected="${producto.categoriaId != null and c.id == producto.categoriaId.id}">
-                      </option> -->
                       <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nombre}"
-                        th:selected="${producto.categoria?.id == c.id}">
+                        th:selected="${producto.categoriaId != null and c.id == producto.categoriaId.id}">
                       </option>
+                      <!-- <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nombre}"
+                        th:selected="${producto.categoria?.id == c.id}">
+                      </option> -->
                     </select>
                   </div>
                 </div>
